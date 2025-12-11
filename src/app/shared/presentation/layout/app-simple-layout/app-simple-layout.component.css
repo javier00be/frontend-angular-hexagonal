@@ -1,0 +1,6 @@
+/* Solo estilos necesarios para PrimeNG que no se pueden hacer con Tailwind */
+:host ::ng-deep .p-toolbar {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}

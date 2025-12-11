@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -27,11 +27,5 @@ import { CartStateService } from '../../state/cart-state.service';
   styleUrl: './app-header.component.css'
 })
 export class AppHeaderComponent {
-  @Output() menuClick = new EventEmitter<void>();
-
   constructor(public cartState: CartStateService) { }
-
-  onMenuClick(): void {
-    this.menuClick.emit();
-  }
 }

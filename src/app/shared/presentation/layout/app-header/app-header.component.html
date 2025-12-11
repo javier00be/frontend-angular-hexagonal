@@ -1,17 +1,16 @@
-<p-toolbar>
+<p-toolbar styleClass="!bg-transparent !border-none !shadow-none">
     <ng-template pTemplate="start">
-        <!-- Botón de Menú (Hamburguesa) -->
-        <p-button icon="pi pi-bars" [text]="true" (onClick)="onMenuClick()" class="mr-3">
-        </p-button>
-
-        <!-- Logo y Nombre -->
-        <img src="logo.png" height="40" class="mr-2">
-        <span class="font-bold text-xl">HexaShop</span>
+        <span class="font-semibold text-xl text-white drop-shadow-lg">Bensam</span>
     </ng-template>
 
     <ng-template pTemplate="end">
-        <p-button icon="pi pi-bell" [text]="true" severity="secondary"></p-button>
-        <p-button icon="pi pi-cog" [text]="true" severity="secondary"></p-button>
-        <p-avatar label="U" shape="circle"></p-avatar>
+        <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Buscar</p-button>
+        <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Nosotros</p-button>
+        <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Login</p-button>
+        <!-- <p-button icon="pi pi-bell" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
+        <p-button icon="pi pi-cog" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button> -->
+        <p-button icon="pi pi-shopping-cart" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
     </ng-template>
+
+
 </p-toolbar>

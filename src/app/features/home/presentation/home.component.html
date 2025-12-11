@@ -1,0 +1,119 @@
+<!-- Hero Section - Solo imagen de fondo -->
+<section class="relative h-screen w-full overflow-hidden">
+    <!-- Imagen de fondo sin gradiente -->
+    <img src="assets/images/portada.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover">
+
+    <!-- Overlay oscuro opcional para mejorar legibilidad del texto -->
+    <div class="absolute inset-0 bg-black/30"></div>
+
+    <!-- Contenido -->
+    <div class="relative h-full flex items-center justify-between px-4 z-10">
+        <div class="text-white max-w-4xl">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-4 drop-shadow-xl animate-fade-in">
+                B&M
+            </h1>
+            <p class="text-xl sm:text-xl md:text-xl mb-6 opacity-95 drop-shadow-lg">
+                Descubre los mejores productos al mejor precio
+            </p>
+            <button
+                class="liquid-glass text-white px-6 py-2 text-lg font-semibold rounded-full hover:scale-105 hover:shadow-xl transition-all duration-300">
+                Ver Productos
+            </button>
+        </div>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+        <i class="pi pi-chevron-down text-white text-2xl opacity-75"></i>
+    </div>
+</section>
+
+<!-- Sección de contenido - Oferta de Navidad con efecto vidrio -->
+<section class="py-20 px-4 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-0">
+
+            <!-- Imagen Principal (Izquierda) -->
+            <div class="w-full md:w-1/2 h-[700px] relative">
+                <img src="/assets/images/detalle.jpg" alt="Nuestros Servicios"
+                    class="w-full h-full object-cover object-center">
+            </div>
+
+            <!-- Tarjeta de Contenido con efecto LIQUID GLASS -->
+            <div class="liquid-glass w-full md:w-1/2 px-8 py-12 md:px-16 md:py-20 md:-ml-20 z-10 md:my-20">
+                <div class="max-w-md">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
+                        Christmas Offer
+                    </h2>
+
+                    <p class="text-gray-800 text-base mb-4 leading-relaxed">
+                        For a limited time, enjoy <strong class="font-bold">50% off</strong> when you purchase two
+                        pieces from our collection. Build the wardrobe you deserve - with timeless quality, comfort, and
+                        design.
+                    </p>
+
+                    <p class="text-gray-800 text-sm mb-2">
+                        Use code <strong class="font-bold">XMAS50</strong>, valid until 31/12 2025
+                    </p>
+
+                    <p class="text-gray-600 text-sm italic mb-8">
+                        *Northern star suit, Rebel suit in black, navy and grey is not included.
+                    </p>
+
+                    <button
+                        class="bg-black text-white px-8 py-3 text-sm font-medium hover:bg-gray-900 transition-all duration-300 uppercase tracking-wide">
+                        Invest here
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-full flex flex-col md:flex-row">
+    <!-- First Column (Blazer) -->
+    <div class="relative w-full md:w-1/2 h-full group overflow-hidden">
+        <img src="assets/images/blazer.jpg" alt="Blazer"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+
+        <!-- Overlay Content -->
+        <div class="absolute bottom-12 left-0 right-0 flex flex-col items-center justify-end z-10 text-white pb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-widest mb-4 drop-shadow-md">
+                Blazers
+            </h3>
+            <button
+                class="border border-white px-8 py-2 text-xs font-medium uppercase tracking-widest hover:bg-white hover:text-black transition-colors duration-300">
+                Shop
+            </button>
+        </div>
+
+        <!-- Gradient overlay for better text readability -->
+        <div
+            class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent pointer-events-none">
+        </div>
+    </div>
+
+    <!-- Second Column (Camisa) -->
+    <div class="relative w-full md:w-1/2 h-full group overflow-hidden">
+        <img src="assets/images/camisa.jpg" alt="Camisa"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+
+        <!-- Overlay Content -->
+        <div class="absolute bottom-12 left-0 right-0 flex flex-col items-center justify-end z-10 text-white pb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-widest mb-4 drop-shadow-md">
+                Camisas
+            </h3>
+            <button
+                class="border border-white px-8 py-2 text-xs font-medium uppercase tracking-widest hover:bg-white hover:text-black transition-colors duration-300">
+                Shop
+            </button>
+        </div>
+
+        <!-- Gradient overlay for better text readability -->
+        <div
+            class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent pointer-events-none">
+        </div>
+    </div>
+</section>
+
+<div class="cursor-glass" [style.left.px]="mouseX" [style.top.px]="mouseY"></div>

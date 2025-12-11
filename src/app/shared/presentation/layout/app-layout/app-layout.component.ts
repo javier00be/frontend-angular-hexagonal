@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -19,9 +19,5 @@ import { AppSidebarComponent } from '../app-sidebar/app-sidebar.component';
     styleUrl: './app-layout.component.css'
 })
 export class AppLayoutComponent {
-    @ViewChild(AppSidebarComponent) sidebar!: AppSidebarComponent;
-
-    toggleSidebar(): void {
-        this.sidebar.toggle();
-    }
+    // Layout estático - no necesita métodos para toggle
 }

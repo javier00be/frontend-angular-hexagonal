@@ -1,1 +1,41 @@
-/* Sin estilos personalizados - usando tema Aura de PrimeNG */
+.sidebar {
+    height: 100%;
+    width: 280px;
+    background: var(--surface-card);
+    border-right: 1px solid var(--surface-border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-footer {
+    border-top: 1px solid var(--surface-border);
+    margin-top: auto;
+}
+
+/* Scrollbar personalizado */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--surface-ground);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--surface-border);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}

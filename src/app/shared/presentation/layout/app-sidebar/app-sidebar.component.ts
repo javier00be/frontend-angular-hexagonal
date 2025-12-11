@@ -1,11 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
-// PrimeNG Imports - Usando DrawerModule
-import { DrawerModule } from 'primeng/drawer';
+// PrimeNG Imports
 import { MenuModule } from 'primeng/menu';
-import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuItem } from 'primeng/api';
 
@@ -17,18 +14,13 @@ import { CartStateService } from '../../state/cart-state.service';
     standalone: true,
     imports: [
         CommonModule,
-        DrawerModule,
         MenuModule,
-        ButtonModule,
         AvatarModule
     ],
     templateUrl: './app-sidebar.component.html',
     styleUrl: './app-sidebar.component.css'
 })
 export class AppSidebarComponent {
-    // Signal para controlar visibilidad del sidebar
-    visible = signal(false);
-
     // Menú de navegación
     menuItems: MenuItem[] = [];
 
@@ -41,8 +33,7 @@ export class AppSidebarComponent {
             {
                 label: 'Inicio',
                 icon: 'pi pi-home',
-                routerLink: '/',
-                command: () => this.closeSidebar()
+                routerLink: '/'
             },
             {
                 separator: true
@@ -54,20 +45,17 @@ export class AppSidebarComponent {
                     {
                         label: 'Catálogo',
                         icon: 'pi pi-list',
-                        routerLink: '/productos',
-                        command: () => this.closeSidebar()
+                        routerLink: '/productos'
                     },
                     {
                         label: 'Nuevos',
                         icon: 'pi pi-star',
-                        routerLink: '/productos/nuevos',
-                        command: () => this.closeSidebar()
+                        routerLink: '/productos/nuevos'
                     },
                     {
                         label: 'Ofertas',
                         icon: 'pi pi-tag',
-                        routerLink: '/productos/ofertas',
-                        command: () => this.closeSidebar()
+                        routerLink: '/productos/ofertas'
                     }
                 ]
             },
@@ -78,20 +66,17 @@ export class AppSidebarComponent {
                     {
                         label: 'Inventario',
                         icon: 'pi pi-database',
-                        routerLink: '/materiales/inventario',
-                        command: () => this.closeSidebar()
+                        routerLink: '/materiales/inventario'
                     },
                     {
                         label: 'Proveedores',
                         icon: 'pi pi-users',
-                        routerLink: '/materiales/proveedores',
-                        command: () => this.closeSidebar()
+                        routerLink: '/materiales/proveedores'
                     },
                     {
                         label: 'Órdenes',
                         icon: 'pi pi-file',
-                        routerLink: '/materiales/ordenes',
-                        command: () => this.closeSidebar()
+                        routerLink: '/materiales/ordenes'
                     }
                 ]
             },
@@ -103,8 +88,7 @@ export class AppSidebarComponent {
                 icon: 'pi pi-shopping-cart',
                 routerLink: '/carrito',
                 badge: this.cartState.itemCount().toString(),
-                badgeClass: 'p-badge-danger',
-                command: () => this.closeSidebar()
+                badgeClass: 'p-badge-danger'
             },
             {
                 separator: true
@@ -115,40 +99,21 @@ export class AppSidebarComponent {
                 items: [
                     {
                         label: 'Perfil',
-                        icon: 'pi pi-user',
-                        command: () => this.closeSidebar()
+                        icon: 'pi pi-user'
                     },
                     {
                         label: 'Tema',
-                        icon: 'pi pi-palette',
-                        command: () => this.closeSidebar()
+                        icon: 'pi pi-palette'
                     },
                     {
                         separator: true
                     },
                     {
                         label: 'Cerrar Sesión',
-                        icon: 'pi pi-sign-out',
-                        command: () => this.closeSidebar()
+                        icon: 'pi pi-sign-out'
                     }
                 ]
             }
         ];
-    }
-
-    toggle(): void {
-        this.visible.update(v => !v);
-    }
-
-    open(): void {
-        this.visible.set(true);
-    }
-
-    close(): void {
-        this.visible.set(false);
-    }
-
-    private closeSidebar(): void {
-        this.visible.set(false);
     }
 }
