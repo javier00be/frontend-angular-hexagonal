@@ -1,0 +1,17 @@
+<p-toolbar>
+    <ng-template pTemplate="start">
+        <!-- Botón de Menú (Hamburguesa) -->
+        <p-button icon="pi pi-bars" [text]="true" (onClick)="onMenuClick()" class="mr-3">
+        </p-button>
+
+        <!-- Logo y Nombre -->
+        <img src="logo.png" height="40" class="mr-2">
+        <span class="font-bold text-xl">HexaShop</span>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+        <p-button icon="pi pi-bell" [text]="true" severity="secondary"></p-button>
+        <p-button icon="pi pi-cog" [text]="true" severity="secondary"></p-button>
+        <p-avatar label="U" shape="circle"></p-avatar>
+    </ng-template>
+</p-toolbar>

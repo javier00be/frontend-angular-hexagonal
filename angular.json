@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "00ad9204-02e8-489e-a5d1-fb0ef4185085"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -25,6 +26,11 @@
               }
             ],
             "styles": [
+              {
+                "input": "node_modules/primeicons/primeicons.css",
+                "inject": true,
+                "bundleName": "primeicons"
+              },
               "src/styles.css"
             ],
             "server": "src/main.server.ts",

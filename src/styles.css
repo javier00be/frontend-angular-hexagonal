@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+/* ========================================================= */
+/* Imports - Deben ir PRIMERO antes de cualquier regla CSS  */
+/* ========================================================= */
+
+/* Importar fuente de Google Fonts (puedes cambiar por la que prefieras) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* PrimeFlex para utilidades */
+@import "primeflex/primeflex.css";
+
+/* ========================================================= */
+/* Estilos Globales - PrimeNG con Tema Aura                  */
+/* El tema se configura en app.config.ts con providePrimeNG  */
+/* ========================================================= */
+
+/* Sobrescribir la fuente del tema Aura */
+:root {
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Reseteo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    background-color: var(--surface-ground);
+    color: var(--text-color);
+}
+
+/* Contenedor principal */
+main {
+    min-height: calc(100vh - 80px);
+    padding: 1rem;
+}

@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+
+// Layout Component
+import { AppLayoutComponent } from './shared/presentation/layout/app-layout/app-layout.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [
+    AppLayoutComponent
+  ],
+  template: `<app-layout></app-layout>`
 })
 export class App {
-  protected readonly title = signal('frontend-hexagonal');
+  // La lógica de la aplicación se maneja en los componentes de las Features/Presentation.
 }
