@@ -70,7 +70,7 @@
     </div>
 </section>
 
-<section class="h-screen w-full flex flex-col md:flex-row">
+<section class="h-screen w-full flex flex-col md:flex-row gap-1 bg-white">
     <!-- First Column (Blazer) -->
     <div class="relative w-full md:w-1/2 h-full group overflow-hidden">
         <img src="assets/images/blazer.jpg" alt="Blazer"
@@ -115,5 +115,38 @@
         </div>
     </div>
 </section>
+
+<section class="py-14 bg-white">
+    <div class="max-w-[1400px] mx-auto px-4">
+        <h2 class="text-center text-sm font-bold tracking-widest uppercase mb-12">Ternos</h2>
+
+        <div #carouselContainer
+            class="carousel-container flex gap-4 pb-8 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
+            (mousedown)="onMouseDown($event, carouselContainer)" (mousemove)="onMouseMove($event)"
+            (mouseup)="onMouseUp()" (mouseleave)="onMouseUp()">
+            <div *ngFor="let product of products" class="flex-shrink-0 w-[320px]">
+                <div class="group cursor-pointer">
+                    <div class="relative w-full aspect-[3/4] mb-4 overflow-hidden bg-gray-100">
+                        <img [src]="product.image" [alt]="product.name"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            draggable="false">
+                    </div>
+
+                    <div class="flex flex-col space-y-1">
+                        <h3 class="text-xs font-medium text-gray-900">
+                            {{ product.name }} - <span class="text-gray-500">{{ product.description }}</span>
+                        </h3>
+                        <p class="text-xs text-gray-900">{{ product.price }}</p>
+                        <button
+                            class="text-[10px] font-bold uppercase underline tracking-wider text-left mt-2 hover:text-gray-600 w-fit">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <div class="cursor-glass" [style.left.px]="mouseX" [style.top.px]="mouseY"></div>
