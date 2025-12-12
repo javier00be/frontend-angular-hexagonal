@@ -7,14 +7,18 @@ import Aura from '@primeuix/themes/aura';
 // Dominios
 import { ProductRepository } from './core/domain/product/product.model';
 import { CartRepository } from './core/domain/cart/cart.model';
+import { DashboardRepository } from './core/domain/dashboard/dashboard.model';
 
 // Casos de Uso
 import { GetAllProductsUseCase } from './core/application/product/get-all-products.usecase';
 import { AddToCartUseCase } from './core/application/cart/add-to-cart.usecase';
+import { GetDashboardStatsUseCase } from './core/application/dashboard/get-dashboard-stats.usecase';
+import { GetSalesChartUseCase } from './core/application/dashboard/get-sales-chart.usecase';
 
 // Adaptadores
 import { ProductMockAdapter } from './features/catalog/infrastructure/product-mock.adapter';
 import { CartInMemoryAdapter } from './features/cart/infrastructure/cart-in-memory.adapter';
+import { DashboardMockAdapter } from './features/dashboard/infrastructure/dashboard-mock.adapter';
 
 import { routes } from './app.routes'; // Necesitas crear este archivo
 
@@ -40,6 +44,7 @@ export const appConfig: ApplicationConfig = {
     // 1. Adaptadores de Infraestructura (Implementación de Puertos)
     { provide: ProductRepository, useClass: ProductMockAdapter },
     { provide: CartRepository, useClass: CartInMemoryAdapter },
+    { provide: DashboardRepository, useClass: DashboardMockAdapter },
 
     // 2. Casos de Uso (Se inyectan las interfaces/Puertos)
     {
@@ -51,6 +56,16 @@ export const appConfig: ApplicationConfig = {
       provide: AddToCartUseCase,
       useFactory: (repo: CartRepository) => new AddToCartUseCase(repo),
       deps: [CartRepository],
+    },
+    {
+      provide: GetDashboardStatsUseCase,
+      useFactory: (repo: DashboardRepository) => new GetDashboardStatsUseCase(repo),
+      deps: [DashboardRepository],
+    },
+    {
+      provide: GetSalesChartUseCase,
+      useFactory: (repo: DashboardRepository) => new GetSalesChartUseCase(repo),
+      deps: [DashboardRepository],
     },
 
     // El resto de los servicios de Angular (MessageService) se proveen localmente o en el root.
