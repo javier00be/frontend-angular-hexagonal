@@ -7,10 +7,62 @@
         <ng-template pTemplate="end">
             <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Buscar</p-button>
             <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Nosotros</p-button>
-            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Login</p-button>
+
+            <!-- Login Button with Popover -->
+            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10" (onClick)="loginPopover.toggle($event)">
+                Login
+            </p-button>
+
             <!-- <p-button icon="pi pi-bell" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
             <p-button icon="pi pi-cog" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button> -->
             <p-button icon="pi pi-shopping-cart" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
         </ng-template>
     </p-toolbar>
 </div>
+
+<!-- Login Popover -->
+<p-popover #loginPopover>
+    <div class="w-80 p-2">
+        <h3 class="text-lg text-center font-semibold mb-4 text-gray-900">Iniciar Sesión</h3>
+
+        <!-- Email/Username Input -->
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                Email o Usuario
+            </label>
+            <input id="email" type="text" pInputText [(ngModel)]="loginEmail" placeholder="ejemplo@correo.com"
+                class="w-full" />
+        </div>
+
+        <!-- Password Input -->
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                Contraseña
+            </label>
+            <p-password id="password" [(ngModel)]="loginPassword" [toggleMask]="true" [feedback]="false"
+                placeholder="••••••••" styleClass="w-full" inputStyleClass="w-full">
+            </p-password>
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <input type="checkbox" id="remember" class="mr-2">
+                <label for="remember" class="text-sm text-gray-600">Recordarme</label>
+            </div>
+            <a href="#" class="text-sm text-blue-600 hover:underline">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- Login Button -->
+        <p-button label="Iniciar Sesión" (onClick)="onLogin()" styleClass="w-full !bg-black !border-black !text-white"
+            severity="secondary">
+        </p-button>
+
+
+        <!-- Register Link -->
+        <div class="text-center mt-4">
+            <span class="text-sm text-gray-600">¿No tienes cuenta? </span>
+            <a href="#" class="text-sm text-blue-600 hover:underline font-semibold">Regístrate</a>
+        </div>
+    </div>
+</p-popover>
