@@ -1,1 +1,17 @@
-/* Sin CSS personalizado - solo Tailwind */
+/* Estilos para el header con scroll */
+:host ::ng-deep .p-toolbar {
+    transition: all 0.3s ease-in-out;
+    border-radius: 0 !important;
+}
+
+/* Header cuando está scrolled */
+:host ::ng-deep .header-scrolled .p-toolbar {
+    background-color: #000000 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Header cuando está en el top */
+:host ::ng-deep .header-transparent .p-toolbar {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -27,5 +27,13 @@ import { CartStateService } from '../../state/cart-state.service';
   styleUrl: './app-header.component.css'
 })
 export class AppHeaderComponent {
+  isScrolled = false;
+
   constructor(public cartState: CartStateService) { }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Change header background when scrolled more than 50px
+    this.isScrolled = window.scrollY > 50;
+  }
 }

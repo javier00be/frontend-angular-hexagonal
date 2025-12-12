@@ -117,14 +117,14 @@
 </section>
 
 <section class="py-14 bg-white">
-    <div class="max-w-[1400px] mx-auto px-4">
-        <h2 class="text-center text-sm font-bold tracking-widest uppercase mb-12">Ternos</h2>
+    <div class="max-w-[1920px] mx-auto px-4">
+        <h2 class="text-center text-sm font-bold tracking-widest uppercase mb-10">Ternos</h2>
 
         <div #carouselContainer
-            class="carousel-container flex gap-4 pb-8 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
+            class="carousel-container flex gap-3 pb-2 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
             (mousedown)="onMouseDown($event, carouselContainer)" (mousemove)="onMouseMove($event)"
             (mouseup)="onMouseUp()" (mouseleave)="onMouseUp()">
-            <div *ngFor="let product of products" class="flex-shrink-0 w-[320px]">
+            <div *ngFor="let product of products" class="flex-shrink-0 w-[calc((100%-2.25rem)/4)]">
                 <div class="group cursor-pointer">
                     <div class="relative w-full aspect-[3/4] mb-4 overflow-hidden bg-gray-100">
                         <img [src]="product.image" [alt]="product.name"
@@ -148,5 +148,46 @@
     </div>
 </section>
 
+<section class="py-12 bg-white">
+    <div class="max-w-[1920px] mx-auto px-4">
+        <h2 class="text-center text-sm font-bold tracking-widest uppercase mb-10">Valoraciones</h2>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+            <div *ngFor="let testimonial of testimonials"
+                class="group bg-white border border-gray-200 p-6 transition-all duration-300 hover:shadow-lg hover:border-gray-300">
+
+                <!-- Avatar and Name -->
+                <div class="flex items-center gap-4 mb-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold">
+                        {{ testimonial.avatar }}
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-900">{{ testimonial.name }}</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide">{{ testimonial.role }}</p>
+                    </div>
+                </div>
+
+                <!-- Rating Stars -->
+                <div class="flex gap-1 mb-4">
+                    <i *ngFor="let star of [1,2,3,4,5]" class="pi pi-star-fill text-xs"
+                        [class.text-black]="star <= testimonial.rating"
+                        [class.text-gray-300]="star > testimonial.rating">
+                    </i>
+                </div>
+
+                <!-- Comment -->
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    "{{ testimonial.comment }}"
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<app-footer></app-footer>
+
+
+<div class="cursor-glass" [style.left.px]="mouseX" [style.top.px]="mouseY"></div>
 <div class="cursor-glass" [style.left.px]="mouseX" [style.top.px]="mouseY"></div>

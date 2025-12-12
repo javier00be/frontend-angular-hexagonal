@@ -1,16 +1,16 @@
-<p-toolbar styleClass="!bg-transparent !border-none !shadow-none">
-    <ng-template pTemplate="start">
-        <span class="font-semibold text-xl text-white drop-shadow-lg">Bensam</span>
-    </ng-template>
+<div [ngClass]="isScrolled ? 'header-scrolled' : 'header-transparent'" class="fixed top-0 left-0 right-0 z-50">
+    <p-toolbar styleClass="!border-none">
+        <ng-template pTemplate="start">
+            <span class="font-semibold text-xl text-white drop-shadow-lg">Bensam</span>
+        </ng-template>
 
-    <ng-template pTemplate="end">
-        <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Buscar</p-button>
-        <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Nosotros</p-button>
-        <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Login</p-button>
-        <!-- <p-button icon="pi pi-bell" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
-        <p-button icon="pi pi-cog" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button> -->
-        <p-button icon="pi pi-shopping-cart" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
-    </ng-template>
-
-
-</p-toolbar>
+        <ng-template pTemplate="end">
+            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Buscar</p-button>
+            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Nosotros</p-button>
+            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Login</p-button>
+            <!-- <p-button icon="pi pi-bell" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
+            <p-button icon="pi pi-cog" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button> -->
+            <p-button icon="pi pi-shopping-cart" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
+        </ng-template>
+    </p-toolbar>
+</div>
