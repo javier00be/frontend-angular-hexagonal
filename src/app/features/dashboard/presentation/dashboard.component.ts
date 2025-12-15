@@ -5,9 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Card } from 'primeng/card';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { Message } from 'primeng/message';
-import { DataView } from 'primeng/dataview';
 import { Tag } from 'primeng/tag';
-import { Button } from 'primeng/button';
 
 // Hexagonal Imports
 import { GetDashboardStatsUseCase } from '../../../core/application/dashboard/get-dashboard-stats.usecase';
@@ -25,9 +23,7 @@ import { StatsCardComponent } from './components/stats-card/stats-card.component
         Card,
         ProgressSpinner,
         Message,
-        DataView,
         Tag,
-        Button,
         StatsCardComponent
     ],
     templateUrl: './dashboard.component.html',
