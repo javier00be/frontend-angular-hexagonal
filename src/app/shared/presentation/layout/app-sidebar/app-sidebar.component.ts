@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 // PrimeNG Imports
 import { MenuModule } from 'primeng/menu';
@@ -14,6 +15,7 @@ import { CartStateService } from '../../state/cart-state.service';
     standalone: true,
     imports: [
         CommonModule,
+        RouterModule,
         MenuModule,
         AvatarModule
     ],
@@ -24,59 +26,84 @@ export class AppSidebarComponent {
     // Menú de navegación
     menuItems: MenuItem[] = [];
 
-    constructor(public cartState: CartStateService) {
+    constructor(
+        public cartState: CartStateService,
+        private router: Router
+    ) {
         this.initializeMenu();
     }
 
     private initializeMenu(): void {
         this.menuItems = [
             {
-                label: 'Inicio',
-                icon: 'pi pi-home',
-                routerLink: '/'
+                label: 'Dashboard',
+                icon: 'pi pi-chart-line',
+                items: [
+                    {
+                        label: 'Inicio',
+                        icon: 'pi pi-home',
+                        routerLink: '/dashboard'
+                    }
+                ]
             },
             {
                 separator: true
             },
             {
                 label: 'Productos',
-                icon: 'pi pi-shopping-bag',
+                icon: 'pi pi-box',
                 items: [
                     {
-                        label: 'Catálogo',
+                        label: 'Lista de Productos',
                         icon: 'pi pi-list',
-                        routerLink: '/productos'
+                        routerLink: '/productos-admin'
                     },
                     {
-                        label: 'Nuevos',
-                        icon: 'pi pi-star',
-                        routerLink: '/productos/nuevos'
+                        separator: true
                     },
                     {
-                        label: 'Ofertas',
-                        icon: 'pi pi-tag',
-                        routerLink: '/productos/ofertas'
+                        label: 'Categorías',
+                        icon: 'pi pi-tags',
+                        routerLink: '/productos/categorias'
+                    },
+                    {
+                        label: 'Marcas',
+                        icon: 'pi pi-bookmark',
+                        routerLink: '/productos/marcas'
+                    },
+                    {
+                        label: 'Telas',
+                        icon: 'pi pi-palette',
+                        routerLink: '/productos/telas'
+                    },
+                    {
+                        label: 'Materiales',
+                        icon: 'pi pi-box',
+                        routerLink: '/productos/materiales'
                     }
                 ]
             },
             {
-                label: 'Materiales',
-                icon: 'pi pi-box',
+                separator: true
+            },
+            {
+                label: 'Órdenes',
+                icon: 'pi pi-shopping-cart',
                 items: [
                     {
-                        label: 'Inventario',
-                        icon: 'pi pi-database',
-                        routerLink: '/materiales/inventario'
+                        label: 'Todas',
+                        icon: 'pi pi-list',
+                        routerLink: '/ordenes'
                     },
                     {
-                        label: 'Proveedores',
-                        icon: 'pi pi-users',
-                        routerLink: '/materiales/proveedores'
+                        label: 'Pendientes',
+                        icon: 'pi pi-clock',
+                        routerLink: '/ordenes/pendientes'
                     },
                     {
-                        label: 'Órdenes',
-                        icon: 'pi pi-file',
-                        routerLink: '/materiales/ordenes'
+                        label: 'Completadas',
+                        icon: 'pi pi-check',
+                        routerLink: '/ordenes/completadas'
                     }
                 ]
             },
@@ -99,11 +126,13 @@ export class AppSidebarComponent {
                 items: [
                     {
                         label: 'Perfil',
-                        icon: 'pi pi-user'
+                        icon: 'pi pi-user',
+                        routerLink: '/perfil'
                     },
                     {
-                        label: 'Tema',
-                        icon: 'pi pi-palette'
+                        label: 'Temas',
+                        icon: 'pi pi-palette',
+                        routerLink: '/configuracion/temas'
                     },
                     {
                         separator: true

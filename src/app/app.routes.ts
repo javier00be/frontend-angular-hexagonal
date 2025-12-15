@@ -36,6 +36,11 @@ export const routes: Routes = [
                 path: 'dashboard',
                 loadComponent: () => import('./features/dashboard/presentation/dashboard.component').then(m => m.DashboardComponent),
                 title: 'HexaShop - Dashboard'
+            },
+            {
+                path: 'productos-admin',
+                loadComponent: () => import('./features/catalog/presentation/product-admin/product-admin.component').then(m => m.ProductAdminComponent),
+                title: 'HexaShop - Gestión de Productos'
             }
         ]
     },

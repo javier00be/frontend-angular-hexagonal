@@ -1,0 +1,103 @@
+<div class="product-admin-container">
+    <!-- Header -->
+    <div class="admin-header">
+        <div>
+            <h1>Gestión de Productos</h1>
+            <p class="subtitle">Administra el catálogo de productos</p>
+        </div>
+        <p-button label="Nuevo Producto" icon="pi pi-plus" (onClick)="addNewProduct()" severity="success"></p-button>
+    </div>
+
+    <p-toast></p-toast>
+
+    <!-- Loading State -->
+    <div *ngIf="productState.isLoading()" class="loading-container">
+        <p-progressSpinner></p-progressSpinner>
+        <p>Cargando productos...</p>
+    </div>
+
+    <!-- Error State -->
+    <p-message *ngIf="productState.error()" severity="error" [text]="productState.error()!"
+        styleClass="admin-error"></p-message>
+
+    <!-- Products DataView -->
+    <div *ngIf="!productState.isLoading() && !productState.error()">
+        <p-dataview [value]="productState.products()" [layout]="layout" [paginator]="true" [rows]="9">
+            <ng-template pTemplate="header">
+                <div class="dataview-header">
+                    <p-iconfield iconPosition="left">
+                        <p-inputicon styleClass="pi pi-search"></p-inputicon>
+                        <input pInputText type="text" [(ngModel)]="searchValue" placeholder="Buscar productos..." />
+                    </p-iconfield>
+
+                    <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="label"
+                        optionValue="value">
+                        <ng-template let-item pTemplate>
+                            <i [class]="item.icon"></i>
+                        </ng-template>
+                    </p-selectButton>
+                </div>
+            </ng-template>
+
+            <!-- Grid Layout -->
+            <ng-template let-product pTemplate="gridItem">
+                <div class="col-12 md:col-6 lg:col-4 p-2">
+                    <div class="product-grid-item card">
+                        <div class="product-grid-item-top">
+                            <div class="product-badge">
+                                <p-tag [value]="getStockLabel(product.stock)"
+                                    [severity]="getStockSeverity(product.stock)"></p-tag>
+                            </div>
+                        </div>
+                        <div class="product-grid-item-content">
+                            <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
+                            <div class="product-name">{{ product.name }}</div>
+                            <div class="product-description">{{ product.description }}</div>
+                            <div class="product-stock">
+                                <i class="pi pi-box"></i>
+                                <span>Stock: {{ product.stock }}</span>
+                            </div>
+                        </div>
+                        <div class="product-grid-item-bottom">
+                            <span class="product-price">{{ formatCurrency(product.price) }}</span>
+                            <div class="product-actions">
+                                <p-button icon="pi pi-pencil" [outlined]="true" severity="info"
+                                    (onClick)="editProduct(product)"></p-button>
+                                <p-button icon="pi pi-trash" [outlined]="true" severity="danger"
+                                    (onClick)="deleteProduct(product)"></p-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <!-- List Layout -->
+            <ng-template let-product pTemplate="listItem">
+                <div class="col-12 p-2">
+                    <div class="product-list-item card">
+                        <img [src]="product.imageUrl" [alt]="product.name" class="product-list-image" />
+                        <div class="product-list-detail">
+                            <div class="product-name">{{ product.name }}</div>
+                            <div class="product-description">{{ product.description }}</div>
+                            <div class="product-stock">
+                                <i class="pi pi-box"></i>
+                                <span>Stock: {{ product.stock }}</span>
+                            </div>
+                            <p-tag [value]="getStockLabel(product.stock)"
+                                [severity]="getStockSeverity(product.stock)"></p-tag>
+                        </div>
+                        <div class="product-list-action">
+                            <span class="product-price">{{ formatCurrency(product.price) }}</span>
+                            <div class="product-actions">
+                                <p-button icon="pi pi-pencil" label="Editar" [outlined]="true" severity="info"
+                                    (onClick)="editProduct(product)"></p-button>
+                                <p-button icon="pi pi-trash" label="Eliminar" [outlined]="true" severity="danger"
+                                    (onClick)="deleteProduct(product)"></p-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataview>
+    </div>
+</div>
