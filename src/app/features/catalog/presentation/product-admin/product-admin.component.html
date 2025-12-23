@@ -1,9 +1,9 @@
-<div class="product-admin-container">
+<div class="p-4 max-w-7xl mx-auto">
     <!-- Header -->
-    <div class="admin-header">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
         <div>
-            <h1>Gestión de Productos</h1>
-            <p class="subtitle">Administra el catálogo de productos</p>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white m-0">Gestión de Productos</h1>
+            <p class="text-base text-gray-600 dark:text-gray-400 mt-2 mb-0">Administra el catálogo de productos</p>
         </div>
         <p-button label="Nuevo Producto" icon="pi pi-plus" (onClick)="addNewProduct()" severity="success"></p-button>
     </div>
@@ -11,23 +11,42 @@
     <p-toast></p-toast>
 
     <!-- Loading State -->
-    <div *ngIf="productState.isLoading()" class="loading-container">
+    <div *ngIf="productState.isLoading()" class="flex flex-col items-center justify-center py-16 px-8 gap-4">
         <p-progressSpinner></p-progressSpinner>
-        <p>Cargando productos...</p>
+        <p class="text-gray-600 dark:text-gray-400 text-base">Cargando productos...</p>
     </div>
 
     <!-- Error State -->
     <p-message *ngIf="productState.error()" severity="error" [text]="productState.error()!"
-        styleClass="admin-error"></p-message>
+        styleClass="mb-6"></p-message>
 
     <!-- Products DataView -->
     <div *ngIf="!productState.isLoading() && !productState.error()">
-        <p-dataview #dv [value]="productState.products()" [layout]="layout" [paginator]="true" [rows]="9">
+        <!-- Empty State -->
+        <div *ngIf="productState.products().length === 0" class="bg-white dark:bg-gray-800 rounded-lg">
+            <div class="flex flex-col items-center justify-center py-16 px-4">
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-full p-6 mb-6">
+                    <i class="pi pi-box text-6xl text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">No hay productos registrados</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-center mb-6 max-w-md">
+                    No tiene productos por el momento. Comience agregando su primer producto al catálogo.
+                </p>
+                <p-button label="Registrar Nuevo Producto" icon="pi pi-plus" (onClick)="addNewProduct()"
+                    severity="success"></p-button>
+            </div>
+        </div>
+
+        <!-- DataView with Products -->
+        <p-dataview *ngIf="productState.products().length > 0" #dv [value]="productState.products()" [layout]="layout"
+            [paginator]="true" [rows]="9">
             <ng-template #header>
-                <div class="dataview-header">
-                    <p-iconfield iconPosition="left">
+                <div
+                    class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 p-2 bg-white dark:bg-gray-800 rounded-t-lg dark:border-surface-700">
+                    <p-iconfield iconPosition="left" class="flex-1">
                         <p-inputicon styleClass="pi pi-search"></p-inputicon>
-                        <input pInputText type="text" [(ngModel)]="searchValue" placeholder="Buscar productos..." />
+                        <input pInputText type="text" [(ngModel)]="searchValue" placeholder="Buscar productos..."
+                            class="w-full" />
                     </p-iconfield>
 
                     <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="label"
@@ -41,27 +60,38 @@
 
             <!-- Grid Layout -->
             <ng-template #grid let-products>
-                <div class="grid grid-cols-12 gap-4">
+                <div class="grid grid-cols-12 gap-4 p-4 ">
                     <div *ngFor="let product of products" class="col-span-12 sm:col-span-6 xl:col-span-4 p-2">
-                        <div class="product-grid-item card">
-                            <div class="product-grid-item-top">
-                                <div class="product-badge">
+                        <div
+                            class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden flex flex-col h-full transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 rounded-xl">
+                            <!-- Badge Top (Absolute positioned) -->
+                            <div class="relative">
+                                <img [src]="product.imagen" [alt]="product.nombre"
+                                    class="w-full h-[280px] object-cover" />
+                                <div class="absolute top-3 right-3">
                                     <p-tag [value]="getStockLabel(product.cantidad)"
                                         [severity]="getStockSeverity(product.cantidad)"></p-tag>
                                 </div>
                             </div>
-                            <div class="product-grid-item-content">
-                                <img [src]="product.imagen" [alt]="product.nombre" class="product-image" />
-                                <div class="product-name">{{ product.nombre }}</div>
-                                <div class="product-description">{{ product.descripcion }}</div>
-                                <div class="product-stock">
+
+                            <!-- Content -->
+                            <div class="flex-1 flex flex-col gap-3 p-2">
+                                <div class="font-semibold text-lg text-center">{{ product.nombre }}</div>
+                                <div class="text-gray-600 dark:text-gray-400 text-sm text-center leading-relaxed">{{
+                                    product.descripcion }}</div>
+                                <div
+                                    class="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400 text-sm">
                                     <i class="pi pi-box"></i>
                                     <span>Stock: {{ product.cantidad }}</span>
                                 </div>
                             </div>
-                            <div class="product-grid-item-bottom">
-                                <span class="product-price">{{ formatCurrency(product.precio) }}</span>
-                                <div class="product-actions">
+
+                            <!-- Bottom -->
+                            <div
+                                class="flex justify-between items-center p-2 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="text-2xl font-bold text-blue-900">{{ formatCurrency(product.precio)
+                                    }}</span>
+                                <div class="flex gap-2">
                                     <p-button icon="pi pi-pencil" [outlined]="true" severity="info"
                                         (onClick)="editProduct(product)"></p-button>
                                     <p-button icon="pi pi-trash" [outlined]="true" severity="danger"
@@ -75,28 +105,43 @@
 
             <!-- List Layout -->
             <ng-template #list let-products>
-                <div class="flex flex-col">
-                    <div *ngFor="let product of products; let first = first">
-                        <div class="product-list-item card p-6"
-                            [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }">
-                            <img [src]="product.imagen" [alt]="product.nombre" class="product-list-image" />
-                            <div class="product-list-detail">
-                                <div class="product-name">{{ product.nombre }}</div>
-                                <div class="product-description">{{ product.descripcion }}</div>
-                                <div class="product-stock">
-                                    <i class="pi pi-box"></i>
-                                    <span>Stock: {{ product.cantidad }}</span>
+                <div class="flex flex-col gap-3 p-4">
+                    <div *ngFor="let product of products">
+                        <div
+                            class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden flex flex-col md:flex-row transition-all duration-200 hover:shadow-lg">
+                            <!-- Image -->
+                            <div class="relative md:w-[180px] flex-shrink-0">
+                                <img [src]="product.imagen" [alt]="product.nombre"
+                                    class="w-full h-[200px] md:h-full md:min-h-[180px] object-cover" />
+                                <div class="absolute top-3 left-3">
+                                    <p-tag [value]="getStockLabel(product.cantidad)"
+                                        [severity]="getStockSeverity(product.cantidad)"></p-tag>
                                 </div>
-                                <p-tag [value]="getStockLabel(product.cantidad)"
-                                    [severity]="getStockSeverity(product.cantidad)"></p-tag>
                             </div>
-                            <div class="product-list-action">
-                                <span class="product-price">{{ formatCurrency(product.precio) }}</span>
-                                <div class="product-actions">
-                                    <p-button icon="pi pi-pencil" label="Editar" [outlined]="true" severity="info"
-                                        (onClick)="editProduct(product)"></p-button>
-                                    <p-button icon="pi pi-trash" label="Eliminar" [outlined]="true" severity="danger"
-                                        (onClick)="deleteProduct(product)"></p-button>
+
+                            <!-- Content -->
+                            <div class="flex-1 flex flex-col md:flex-row gap-4 p-4">
+                                <div class="flex-1 flex flex-col gap-2">
+                                    <div class="font-semibold text-lg">{{ product.nombre }}</div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">{{
+                                        product.descripcion }}</div>
+                                    <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm">
+                                        <i class="pi pi-box"></i>
+                                        <span>Stock: {{ product.cantidad }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Price and Actions -->
+                                <div
+                                    class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-3 border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-700 pt-3 md:pt-0 md:pl-4 md:min-w-[200px]">
+                                    <span class="text-2xl font-bold text-primary">{{ formatCurrency(product.precio)
+                                        }}</span>
+                                    <div class="flex gap-2">
+                                        <p-button icon="pi pi-pencil" [outlined]="true" severity="info"
+                                            (onClick)="editProduct(product)" [label]="'Editar'"></p-button>
+                                        <p-button icon="pi pi-trash" [outlined]="true" severity="danger"
+                                            (onClick)="deleteProduct(product)"></p-button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

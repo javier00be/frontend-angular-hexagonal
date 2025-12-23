@@ -42,8 +42,7 @@ import { ProductFormModalComponent } from '../product-form-modal/product-form-mo
         ProductFormModalComponent
     ],
     providers: [MessageService],
-    templateUrl: './product-admin.component.html',
-    styleUrl: './product-admin.component.css'
+    templateUrl: './product-admin.component.html'
 })
 export class ProductAdminComponent implements OnInit {
     searchValue: string = '';

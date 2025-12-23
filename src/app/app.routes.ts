@@ -41,6 +41,21 @@ export const routes: Routes = [
                 path: 'productos-admin',
                 loadComponent: () => import('./features/catalog/presentation/product-admin/product-admin.component').then(m => m.ProductAdminComponent),
                 title: 'HexaShop - Gestión de Productos'
+            },
+            {
+                path: 'marcas',
+                loadComponent: () => import('./features/catalog/presentation/brand-admin/brand-admin.component').then(m => m.BrandAdminComponent),
+                title: 'HexaShop - Gestión de Marcas'
+            },
+            {
+                path: 'categorias',
+                loadComponent: () => import('./features/catalog/presentation/category-admin/category-admin.component').then(m => m.CategoryAdminComponent),
+                title: 'HexaShop - Gestión de Categorías'
+            },
+            {
+                path: 'telas',
+                loadComponent: () => import('./features/catalog/presentation/fabric-admin/fabric-admin.component').then(m => m.FabricAdminComponent),
+                title: 'HexaShop - Gestión de Telas'
             }
         ]
     },

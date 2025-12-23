@@ -1,4 +1,4 @@
-<p-dialog [header]="isEditMode ? 'Editar Producto' : 'Nuevo Producto'" [modal]="true" [(visible)]="visible"
+<p-dialog [header]="isEditMode ? 'Editar Producto' : 'Producto Nuevo'" [modal]="true" [(visible)]="visible"
     (onHide)="onDialogHide()" [style]="{ width: '950px' }" [draggable]="false" [resizable]="false">
 
     <form [formGroup]="productForm">
@@ -82,9 +82,9 @@
                         justify-content: center;
                         cursor: pointer;
                         transition: all 0.3s;
-                    " onmouseover="this.style.borderColor='#10b981'; this.style.backgroundColor='#f0fdf4';"
+                    " onmouseover="this.style.borderColor='#172554'; this.style.backgroundColor='#eff6ff';"
                     onmouseout="this.style.borderColor='#d1d5db'; this.style.backgroundColor='transparent';">
-                    <i class="pi pi-cloud-upload" style="font-size: 4rem; color: #10b981; margin-bottom: 1rem;"></i>
+                    <i class="pi pi-cloud-upload" style="font-size: 4rem; color: #172554; margin-bottom: 1rem;"></i>
                     <p style="margin: 0; font-weight: 600; font-size: 1.125rem; color: #374151;">Haz clic para
                         seleccionar</p>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: #6b7280;">JPG, PNG, GIF (Máx. 5MB)</p>
