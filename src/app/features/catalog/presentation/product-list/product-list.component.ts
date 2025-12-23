@@ -40,7 +40,7 @@ import { ProductStateService } from '../../../../shared/presentation/state/produ
 export class ProductListComponent implements OnInit {
     // Vista del DataView
     layout: 'list' | 'grid' = 'grid';
-    
+
     layoutOptions = [
         { label: 'Lista', value: 'list' },
         { label: 'Grid', value: 'grid' }
@@ -63,16 +63,27 @@ export class ProductListComponent implements OnInit {
      * Maneja estados de loading, error y success con signals
      */
     async loadProducts() {
+        console.log('🟢 [ProductListComponent] Iniciando carga de productos...');
         this.productState.setLoading(true);
         this.productState.setError(null);
 
         try {
+            console.log('🟢 [ProductListComponent] Ejecutando caso de uso GetAllProducts...');
             const products = await this.getAllProducts.execute();
+
+            console.log('✅ [ProductListComponent] Productos obtenidos exitosamente:', products);
+            console.log('📊 [ProductListComponent] Cantidad de productos:', products.length);
+
             this.productState.setProducts(products);
+
+            console.log('✅ [ProductListComponent] Estado actualizado con los productos');
         } catch (error) {
             const errorMsg = error instanceof Error
                 ? error.message
                 : 'No se pudieron cargar los productos';
+
+            console.error('❌ [ProductListComponent] Error al cargar productos:', error);
+            console.error('📝 [ProductListComponent] Mensaje de error:', errorMsg);
 
             this.productState.setError(errorMsg);
             this.messageService.add({
@@ -82,6 +93,7 @@ export class ProductListComponent implements OnInit {
             });
         } finally {
             this.productState.setLoading(false);
+            console.log('🏁 [ProductListComponent] Carga de productos finalizada');
         }
     }
 
@@ -99,7 +111,7 @@ export class ProductListComponent implements OnInit {
             this.messageService.add({
                 severity: 'success',
                 summary: 'Agregado',
-                detail: `${product.name} agregado al carrito`,
+                detail: `${product.nombre} agregado al carrito`,
                 life: 2000
             });
         } catch (error) {
@@ -122,8 +134,8 @@ export class ProductListComponent implements OnInit {
      * Determina la severidad del tag de stock
      */
     getStockSeverity(product: Product): 'success' | 'warning' | 'danger' {
-        if (product.stock === 0) return 'danger';
-        if (product.stock < 10) return 'warning';
+        if (product.cantidad === 0) return 'danger';
+        if (product.cantidad < 10) return 'warning';
         return 'success';
     }
 
@@ -131,8 +143,8 @@ export class ProductListComponent implements OnInit {
      * Obtiene el texto del tag de stock
      */
     getStockLabel(product: Product): string {
-        if (product.stock === 0) return 'Agotado';
-        if (product.stock < 10) return 'Poco Stock';
+        if (product.cantidad === 0) return 'Agotado';
+        if (product.cantidad < 10) return 'Poco Stock';
         return 'Disponible';
     }
 }

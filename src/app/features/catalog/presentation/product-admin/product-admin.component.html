@@ -22,8 +22,8 @@
 
     <!-- Products DataView -->
     <div *ngIf="!productState.isLoading() && !productState.error()">
-        <p-dataview [value]="productState.products()" [layout]="layout" [paginator]="true" [rows]="9">
-            <ng-template pTemplate="header">
+        <p-dataview #dv [value]="productState.products()" [layout]="layout" [paginator]="true" [rows]="9">
+            <ng-template #header>
                 <div class="dataview-header">
                     <p-iconfield iconPosition="left">
                         <p-inputicon styleClass="pi pi-search"></p-inputicon>
@@ -32,39 +32,41 @@
 
                     <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="label"
                         optionValue="value">
-                        <ng-template let-item pTemplate>
-                            <i [class]="item.icon"></i>
+                        <ng-template #item let-option>
+                            <i [class]="option.icon"></i>
                         </ng-template>
                     </p-selectButton>
                 </div>
             </ng-template>
 
             <!-- Grid Layout -->
-            <ng-template let-product pTemplate="gridItem">
-                <div class="col-12 md:col-6 lg:col-4 p-2">
-                    <div class="product-grid-item card">
-                        <div class="product-grid-item-top">
-                            <div class="product-badge">
-                                <p-tag [value]="getStockLabel(product.stock)"
-                                    [severity]="getStockSeverity(product.stock)"></p-tag>
+            <ng-template #grid let-products>
+                <div class="grid grid-cols-12 gap-4">
+                    <div *ngFor="let product of products" class="col-span-12 sm:col-span-6 xl:col-span-4 p-2">
+                        <div class="product-grid-item card">
+                            <div class="product-grid-item-top">
+                                <div class="product-badge">
+                                    <p-tag [value]="getStockLabel(product.cantidad)"
+                                        [severity]="getStockSeverity(product.cantidad)"></p-tag>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-grid-item-content">
-                            <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
-                            <div class="product-name">{{ product.name }}</div>
-                            <div class="product-description">{{ product.description }}</div>
-                            <div class="product-stock">
-                                <i class="pi pi-box"></i>
-                                <span>Stock: {{ product.stock }}</span>
+                            <div class="product-grid-item-content">
+                                <img [src]="product.imagen" [alt]="product.nombre" class="product-image" />
+                                <div class="product-name">{{ product.nombre }}</div>
+                                <div class="product-description">{{ product.descripcion }}</div>
+                                <div class="product-stock">
+                                    <i class="pi pi-box"></i>
+                                    <span>Stock: {{ product.cantidad }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-grid-item-bottom">
-                            <span class="product-price">{{ formatCurrency(product.price) }}</span>
-                            <div class="product-actions">
-                                <p-button icon="pi pi-pencil" [outlined]="true" severity="info"
-                                    (onClick)="editProduct(product)"></p-button>
-                                <p-button icon="pi pi-trash" [outlined]="true" severity="danger"
-                                    (onClick)="deleteProduct(product)"></p-button>
+                            <div class="product-grid-item-bottom">
+                                <span class="product-price">{{ formatCurrency(product.precio) }}</span>
+                                <div class="product-actions">
+                                    <p-button icon="pi pi-pencil" [outlined]="true" severity="info"
+                                        (onClick)="editProduct(product)"></p-button>
+                                    <p-button icon="pi pi-trash" [outlined]="true" severity="danger"
+                                        (onClick)="deleteProduct(product)"></p-button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,27 +74,30 @@
             </ng-template>
 
             <!-- List Layout -->
-            <ng-template let-product pTemplate="listItem">
-                <div class="col-12 p-2">
-                    <div class="product-list-item card">
-                        <img [src]="product.imageUrl" [alt]="product.name" class="product-list-image" />
-                        <div class="product-list-detail">
-                            <div class="product-name">{{ product.name }}</div>
-                            <div class="product-description">{{ product.description }}</div>
-                            <div class="product-stock">
-                                <i class="pi pi-box"></i>
-                                <span>Stock: {{ product.stock }}</span>
+            <ng-template #list let-products>
+                <div class="flex flex-col">
+                    <div *ngFor="let product of products; let first = first">
+                        <div class="product-list-item card p-6"
+                            [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }">
+                            <img [src]="product.imagen" [alt]="product.nombre" class="product-list-image" />
+                            <div class="product-list-detail">
+                                <div class="product-name">{{ product.nombre }}</div>
+                                <div class="product-description">{{ product.descripcion }}</div>
+                                <div class="product-stock">
+                                    <i class="pi pi-box"></i>
+                                    <span>Stock: {{ product.cantidad }}</span>
+                                </div>
+                                <p-tag [value]="getStockLabel(product.cantidad)"
+                                    [severity]="getStockSeverity(product.cantidad)"></p-tag>
                             </div>
-                            <p-tag [value]="getStockLabel(product.stock)"
-                                [severity]="getStockSeverity(product.stock)"></p-tag>
-                        </div>
-                        <div class="product-list-action">
-                            <span class="product-price">{{ formatCurrency(product.price) }}</span>
-                            <div class="product-actions">
-                                <p-button icon="pi pi-pencil" label="Editar" [outlined]="true" severity="info"
-                                    (onClick)="editProduct(product)"></p-button>
-                                <p-button icon="pi pi-trash" label="Eliminar" [outlined]="true" severity="danger"
-                                    (onClick)="deleteProduct(product)"></p-button>
+                            <div class="product-list-action">
+                                <span class="product-price">{{ formatCurrency(product.precio) }}</span>
+                                <div class="product-actions">
+                                    <p-button icon="pi pi-pencil" label="Editar" [outlined]="true" severity="info"
+                                        (onClick)="editProduct(product)"></p-button>
+                                    <p-button icon="pi pi-trash" label="Eliminar" [outlined]="true" severity="danger"
+                                        (onClick)="deleteProduct(product)"></p-button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,4 +105,9 @@
             </ng-template>
         </p-dataview>
     </div>
+
+    <!-- Product Form Modal -->
+    <app-product-form-modal [(visible)]="showProductModal" [product]="selectedProduct"
+        (onSave)="handleProductSave($event)" (onCancel)="handleProductCancel()">
+    </app-product-form-modal>
 </div>

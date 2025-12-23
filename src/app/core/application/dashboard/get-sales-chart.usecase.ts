@@ -1,5 +1,7 @@
+import { Injectable } from '@angular/core';
 import { SalesChartData, DashboardRepository } from '../../domain/dashboard/dashboard.model';
 
+@Injectable({ providedIn: 'root' })
 export class GetSalesChartUseCase {
     constructor(private dashboardRepository: DashboardRepository) { }
 

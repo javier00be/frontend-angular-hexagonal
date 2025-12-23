@@ -37,33 +37,33 @@
             <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
                 [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }">
                 <div class="md:w-40 relative">
-                    <img class="block mx-auto rounded w-full" [src]="product.imageUrl" [alt]="product.name" />
-                    <p-tag [value]="product.stock > 0 ? 'En Stock' : 'Agotado'"
-                        [severity]="product.stock > 0 ? 'success' : 'danger'" class="absolute dark:!bg-surface-900"
+                    <img class="block mx-auto rounded w-full" [src]="product.imagen" [alt]="product.nombre" />
+                    <p-tag [value]="product.cantidad > 0 ? 'En Stock' : 'Agotado'"
+                        [severity]="product.cantidad > 0 ? 'success' : 'danger'" class="absolute dark:!bg-surface-900"
                         [style.left.px]="4" [style.top.px]="4" />
                 </div>
 
                 <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
                     <div class="flex flex-col justify-between items-start gap-2">
                         <div>
-                            <div class="text-lg font-medium">{{ product.name }}</div>
+                            <div class="text-lg font-medium">{{ product.nombre }}</div>
                             <p class="text-surface-500 dark:text-surface-400 text-sm mt-2">
-                                {{ product.description }}
+                                {{ product.descripcion }}
                             </p>
                         </div>
                         <div class="flex items-center gap-2 mt-2">
                             <i class="pi pi-box text-surface-500"></i>
-                            <span class="text-sm">Stock: {{ product.stock }} unidades</span>
+                            <span class="text-sm">Stock: {{ product.cantidad }} unidades</span>
                         </div>
                     </div>
 
                     <div class="flex flex-col md:items-end gap-4">
                         <span class="text-2xl font-semibold text-primary">
-                            {{ product.price | currency: 'USD' }}
+                            {{ product.precio | currency: 'USD' }}
                         </span>
                         <div class="flex flex-row-reverse md:flex-row gap-2">
                             <p-button icon="pi pi-shopping-cart" label="Agregar al Carrito"
-                                [disabled]="product.stock === 0 || cartState.isLoading()"
+                                [disabled]="product.cantidad === 0 || cartState.isLoading()"
                                 [loading]="cartState.isLoading()" (onClick)="onAddToCart(product)"
                                 class="flex-auto md:flex-initial whitespace-nowrap"></p-button>
                         </div>
@@ -81,32 +81,32 @@
                     class="p-6 border border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900 rounded flex flex-col h-full">
                     <div class="bg-surface-50 flex justify-center rounded p-4">
                         <div class="relative mx-auto">
-                            <img class="rounded w-full" [src]="product.imageUrl" [alt]="product.name"
+                            <img class="rounded w-full" [src]="product.imagen" [alt]="product.nombre"
                                 style="max-width: 300px" />
-                            <p-tag [value]="product.stock > 0 ? 'En Stock' : 'Agotado'"
-                                [severity]="product.stock > 0 ? 'success' : 'danger'"
+                            <p-tag [value]="product.cantidad > 0 ? 'En Stock' : 'Agotado'"
+                                [severity]="product.cantidad > 0 ? 'success' : 'danger'"
                                 class="absolute dark:!bg-surface-900" [style.left.px]="4" [style.top.px]="4" />
                         </div>
                     </div>
 
                     <div class="pt-6 flex-1 flex flex-col">
                         <div class="flex-1">
-                            <div class="text-lg font-medium">{{ product.name }}</div>
+                            <div class="text-lg font-medium">{{ product.nombre }}</div>
                             <p class="text-surface-500 dark:text-surface-400 text-sm mt-2">
-                                {{ product.description }}
+                                {{ product.descripcion }}
                             </p>
                             <div class="flex items-center gap-2 mt-3">
                                 <i class="pi pi-box text-surface-500 text-sm"></i>
-                                <span class="text-sm">{{ product.stock }} unidades</span>
+                                <span class="text-sm">{{ product.cantidad }} unidades</span>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-4 mt-6">
                             <span class="text-2xl font-semibold text-primary">
-                                {{ product.price | currency: 'USD' }}
+                                {{ product.precio | currency: 'USD' }}
                             </span>
                             <p-button icon="pi pi-shopping-cart" label="Agregar"
-                                [disabled]="product.stock === 0 || cartState.isLoading()"
+                                [disabled]="product.cantidad === 0 || cartState.isLoading()"
                                 [loading]="cartState.isLoading()" (onClick)="onAddToCart(product)"
                                 styleClass="w-full"></p-button>
                         </div>

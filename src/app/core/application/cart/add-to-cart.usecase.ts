@@ -1,6 +1,8 @@
+import { Injectable } from '@angular/core';
 import { Cart, CartRepository } from '../../domain/cart/cart.model';
 import { Product } from '../../domain/product/product.model';
 
+@Injectable({ providedIn: 'root' })
 export class AddToCartUseCase {
     constructor(private cartRepository: CartRepository) { }
 

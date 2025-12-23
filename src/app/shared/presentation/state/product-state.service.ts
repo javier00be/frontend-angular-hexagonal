@@ -19,12 +19,12 @@ export class ProductStateService {
 
     // Computed: Productos en stock
     public readonly inStockProducts: Signal<Product[]> = computed(() =>
-        this.products().filter(p => p.stock > 0)
+        this.products().filter(p => p.cantidad > 0)
     );
 
     // Computed: Productos agotados
     public readonly outOfStockProducts: Signal<Product[]> = computed(() =>
-        this.products().filter(p => p.stock === 0)
+        this.products().filter(p => p.cantidad === 0)
     );
 
     // Computed: Cantidad total de productos
@@ -42,13 +42,13 @@ export class ProductStateService {
         this.productsSignal.update(products => [...products, product]);
     }
 
-    updateProduct(id: string, updates: Partial<Product>): void {
+    updateProduct(id: number, updates: Partial<Product>): void {
         this.productsSignal.update(products =>
             products.map(p => p.id === id ? { ...p, ...updates } : p)
         );
     }
 
-    removeProduct(id: string): void {
+    removeProduct(id: number): void {
         this.productsSignal.update(products =>
             products.filter(p => p.id !== id)
         );

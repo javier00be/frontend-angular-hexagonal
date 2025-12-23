@@ -24,7 +24,7 @@ export class CartInMemoryAdapter extends CartRepository {
         return Promise.resolve(this.currentCart);
     }
 
-    removeItem(productId: string): Promise<Cart> {
+    removeItem(productId: number): Promise<Cart> {
         this.currentCart.items = this.currentCart.items.filter(item => item.product.id !== productId);
         this.calculateTotal();
         return Promise.resolve(this.currentCart);
@@ -32,7 +32,7 @@ export class CartInMemoryAdapter extends CartRepository {
 
     private calculateTotal() {
         this.currentCart.totalAmount = this.currentCart.items.reduce(
-            (sum, item) => sum + item.product.price * item.quantity, 0
+            (sum, item) => sum + item.product.precio * item.quantity, 0
         );
     }
 }

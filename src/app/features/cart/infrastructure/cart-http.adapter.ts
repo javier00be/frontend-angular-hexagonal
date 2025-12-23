@@ -51,7 +51,7 @@ export class CartHttpAdapter extends CartRepository {
      * @param productId - ID del producto a eliminar
      * @returns Carrito actualizado
      */
-    async removeItem(productId: string): Promise<Cart> {
+    async removeItem(productId: number): Promise<Cart> {
         try {
             return await firstValueFrom(
                 this.http.delete<Cart>(`${this.API_URL}/items/${productId}`)

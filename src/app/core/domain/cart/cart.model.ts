@@ -14,5 +14,5 @@ export interface Cart {
 export abstract class CartRepository {
     abstract getCart(): Promise<Cart>;
     abstract addItem(product: Product, quantity: number): Promise<Cart>;
-    abstract removeItem(productId: string): Promise<Cart>;
+    abstract removeItem(productId: number): Promise<Cart>;
 }

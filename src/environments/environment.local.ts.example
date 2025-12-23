@@ -1,0 +1,7 @@
+# Archivo para configuraciones locales personalizadas
+# Puedes crear este archivo para sobreescribir configuraciones locales sin afectar el repositorio
+export const environment = {
+    production: false,
+    apiUrl: 'http://localhost:8080/api'
+    // Agrega aquí tus configuraciones personales
+};

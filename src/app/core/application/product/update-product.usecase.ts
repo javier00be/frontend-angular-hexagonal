@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Product, ProductRepository } from '../../domain/product/product.model';
 
 @Injectable({ providedIn: 'root' })
-export class GetAllProductsUseCase {
+export class UpdateProductUseCase {
     constructor(private productRepository: ProductRepository) { }
-    execute(): Promise<Product[]> {
-        return this.productRepository.getAll();
+
+    async execute(product: Product, file?: File): Promise<Product> {
+        return await this.productRepository.update(product, file);
     }
 }

@@ -1,0 +1,132 @@
+<p-dialog [header]="isEditMode ? 'Editar Producto' : 'Nuevo Producto'" [modal]="true" [(visible)]="visible"
+    (onHide)="onDialogHide()" [style]="{ width: '950px' }" [draggable]="false" [resizable]="false">
+
+    <form [formGroup]="productForm">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- ========== COLUMNA IZQUIERDA: INPUTS ========== -->
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <!-- Nombre -->
+                <div>
+                    <label for="nombre"
+                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem;">
+                        Nombre del Producto <span style="color: #ef4444;">*</span>
+                    </label>
+                    <input pInputText id="nombre" formControlName="nombre" placeholder="Ej: Monitor Gamer Curvo"
+                        style="width: 100%;" />
+                    <small style="color: #ef4444; font-size: 0.75rem; display: block; margin-top: 0.25rem;"
+                        *ngIf="isFieldInvalid('nombre')">
+                        {{ getFieldError('nombre') }}
+                    </small>
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <label for="descripcion"
+                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem;">
+                        Descripción <span style="color: #ef4444;">*</span>
+                    </label>
+                    <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="4"
+                        placeholder="Describe las características del producto..." style="width: 100%;"></textarea>
+                    <small style="color: #ef4444; font-size: 0.75rem; display: block; margin-top: 0.25rem;"
+                        *ngIf="isFieldInvalid('descripcion')">
+                        {{ getFieldError('descripcion') }}
+                    </small>
+                </div>
+
+                <!-- Precio -->
+                <div>
+                    <label for="precio"
+                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem;">
+                        Precio <span style="color: #ef4444;">*</span>
+                    </label>
+                    <p-inputNumber inputId="precio" formControlName="precio" mode="currency" currency="USD"
+                        locale="en-US" [min]="0" styleClass="w-full">
+                    </p-inputNumber>
+                    <small style="color: #ef4444; font-size: 0.75rem; display: block; margin-top: 0.25rem;"
+                        *ngIf="isFieldInvalid('precio')">
+                        {{ getFieldError('precio') }}
+                    </small>
+                </div>
+
+                <!-- Cantidad -->
+                <div>
+                    <label for="cantidad"
+                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem;">
+                        Cantidad en Stock <span style="color: #ef4444;">*</span>
+                    </label>
+                    <p-inputNumber inputId="cantidad" formControlName="cantidad" [min]="0" [showButtons]="true"
+                        styleClass="w-full">
+                    </p-inputNumber>
+                    <small style="color: #ef4444; font-size: 0.75rem; display: block; margin-top: 0.25rem;"
+                        *ngIf="isFieldInvalid('cantidad')">
+                        {{ getFieldError('cantidad') }}
+                    </small>
+                </div>
+            </div>
+
+            <!-- ========== COLUMNA DERECHA: IMAGEN ========== -->
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem;">
+                    Imagen del Producto <span style="color: #ef4444;">*</span>
+                </label>
+
+                <!-- Área de subida (cuando NO hay imagen) -->
+                <div *ngIf="!imagePreview" (click)="fileInput.click()" style="
+                        width: 100%;
+                        height: 450px;
+                        border: 2px dashed #d1d5db;
+                        border-radius: 0.5rem;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                    " onmouseover="this.style.borderColor='#10b981'; this.style.backgroundColor='#f0fdf4';"
+                    onmouseout="this.style.borderColor='#d1d5db'; this.style.backgroundColor='transparent';">
+                    <i class="pi pi-cloud-upload" style="font-size: 4rem; color: #10b981; margin-bottom: 1rem;"></i>
+                    <p style="margin: 0; font-weight: 600; font-size: 1.125rem; color: #374151;">Haz clic para
+                        seleccionar</p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: #6b7280;">JPG, PNG, GIF (Máx. 5MB)</p>
+                </div>
+
+                <!-- Preview de imagen (cuando SÍ hay imagen) -->
+                <div *ngIf="imagePreview" style="
+                        width: 100%;
+                        height: 450px;
+                        border: 2px solid #e5e7eb;
+                        border-radius: 0.5rem;
+                        overflow: hidden;
+                        position: relative;
+                    ">
+                    <img [src]="imagePreview" alt="Preview" style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                            background-color: #f9fafb;
+                        " />
+
+                    <!-- Botón de eliminar -->
+                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" size="small"
+                        (onClick)="onFileRemove()" styleClass="absolute"
+                        [style]="{ position: 'absolute', top: '0.75rem', right: '0.75rem' }" pTooltip="Eliminar imagen"
+                        tooltipPosition="left">
+                    </p-button>
+                </div>
+
+                <!-- Input file oculto -->
+                <input #fileInput type="file" accept="image/*" (change)="onFileSelect($event)" style="display: none;" />
+
+                <small style="color: #ef4444; font-size: 0.75rem; display: block; margin-top: 0.25rem;"
+                    *ngIf="isFieldInvalid('imagen')">
+                    {{ getFieldError('imagen') }}
+                </small>
+            </div>
+        </div>
+    </form>
+
+    <ng-template #footer>
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="handleCancel()" />
+        <p-button [label]="isEditMode ? 'Actualizar' : 'Crear'" severity="success" (onClick)="handleSave()" />
+    </ng-template>
+</p-dialog>
