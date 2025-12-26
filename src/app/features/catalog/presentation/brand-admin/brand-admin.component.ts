@@ -18,7 +18,7 @@ import { Tag } from 'primeng/tag';
 // Hexagonal Imports
 import { Brand } from '../../../../core/domain/brand/brand.model';
 import { GetAllBrandsUseCase } from '../../../../core/application/brand/get-all-brands.usecase';
-import { DeleteBrandUseCase } from '../../../../core/application/brand/delete-brand.usecase';
+import { UpdateBrandUseCase } from '../../../../core/application/brand/update-brand.usecase';
 import { BrandStateService } from '../../../../shared/presentation/state/brand-state.service';
 import { BrandFormModalComponent } from '../brand-form-modal/brand-form-modal.component';
 
@@ -50,7 +50,7 @@ export class BrandAdminComponent implements OnInit {
 
     constructor(
         private getAllBrands: GetAllBrandsUseCase,
-        private deleteBrand: DeleteBrandUseCase,
+        private updateBrand: UpdateBrandUseCase,
         public brandState: BrandStateService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
@@ -95,10 +95,10 @@ export class BrandAdminComponent implements OnInit {
 
     confirmDelete(brand: Brand) {
         this.confirmationService.confirm({
-            message: `¿Está seguro de eliminar la marca "${brand.nombre}"?`,
-            header: 'Confirmar Eliminación',
+            message: `¿Está seguro de desactivar la marca "${brand.nombre}"?`,
+            header: 'Confirmar Desactivación',
             icon: 'pi pi-exclamation-triangle',
-            acceptLabel: 'Sí, eliminar',
+            acceptLabel: 'Sí, desactivar',
             rejectLabel: 'Cancelar',
             accept: () => this.deleteBrandConfirmed(brand)
         });
@@ -106,15 +106,20 @@ export class BrandAdminComponent implements OnInit {
 
     async deleteBrandConfirmed(brand: Brand) {
         try {
-            await this.deleteBrand.execute(brand.id!);
-            this.brandState.deleteBrand(brand.id!);
+            // Borrado lógico: cambiar estado a 2 (INACTIVO)
+            const updatedBrand = { ...brand, estado: 2 };
+            await this.updateBrand.execute(updatedBrand);
+
+            // Actualizar el estado local
+            this.brandState.updateBrand(brand.id!, updatedBrand);
+
             this.messageService.add({
                 severity: 'success',
                 summary: 'Éxito',
-                detail: `Marca "${brand.nombre}" eliminada correctamente`
+                detail: `Marca "${brand.nombre}" desactivada correctamente`
             });
         } catch (error) {
-            const errorMsg = error instanceof Error ? error.message : 'Error al eliminar la marca';
+            const errorMsg = error instanceof Error ? error.message : 'Error al desactivar la marca';
             this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
@@ -134,11 +139,11 @@ export class BrandAdminComponent implements OnInit {
         this.selectedBrand = null;
     }
 
-    getStatusSeverity(activo: boolean): 'success' | 'danger' {
-        return activo ? 'success' : 'danger';
+    getStatusSeverity(estado?: number): 'success' | 'danger' {
+        return estado === 1 ? 'success' : 'danger';
     }
 
-    getStatusLabel(activo: boolean): string {
-        return activo ? 'Activo' : 'Inactivo';
+    getStatusLabel(estado?: number): string {
+        return estado === 1 ? 'ACTIVO' : 'INACTIVO';
     }
 }

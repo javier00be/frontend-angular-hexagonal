@@ -22,7 +22,9 @@ export class CategoryHttpAdapter extends CategoryRepository {
     }
 
     async create(category: Category): Promise<Category> {
-        return firstValueFrom(this.http.post<Category>(this.apiUrl, category));
+        // Solo enviar el nombre al backend, el estado se crea automáticamente
+        const payload = { nombre: category.nombre };
+        return firstValueFrom(this.http.post<Category>(this.apiUrl, payload));
     }
 
     async update(category: Category): Promise<Category> {

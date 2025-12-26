@@ -39,8 +39,7 @@
 
         <!-- Table with Data -->
         <p-table *ngIf="brandState.brands().length > 0" [value]="brandState.brands()" [paginator]="true" [rows]="10"
-            [globalFilterFields]="['nombre', 'descripcion']" [tableStyle]="{ 'min-width': '50rem' }"
-            styleClass="p-datatable-sm">
+            [globalFilterFields]="['nombre']" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm">
             <ng-template pTemplate="caption">
                 <div class="flex justify-between items-center">
                     <p-iconfield iconPosition="left">
@@ -52,17 +51,14 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id" style="width: 10%">
+                    <th pSortableColumn="id" style="width: 15%">
                         ID <p-sortIcon field="id"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="nombre" style="width: 25%">
+                    <th pSortableColumn="nombre" style="width: 55%">
                         Nombre <p-sortIcon field="nombre"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="descripcion" style="width: 40%">
-                        Descripción <p-sortIcon field="descripcion"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="activo" style="width: 10%">
-                        Estado <p-sortIcon field="activo"></p-sortIcon>
+                    <th pSortableColumn="estado" style="width: 15%">
+                        Estado <p-sortIcon field="estado"></p-sortIcon>
                     </th>
                     <th style="width: 15%">Acciones</th>
                 </tr>
@@ -71,10 +67,9 @@
                 <tr>
                     <td>{{ brand.id }}</td>
                     <td class="font-semibold">{{ brand.nombre }}</td>
-                    <td>{{ brand.descripcion }}</td>
                     <td>
-                        <p-tag [value]="getStatusLabel(brand.activo)"
-                            [severity]="getStatusSeverity(brand.activo)"></p-tag>
+                        <p-tag [value]="getStatusLabel(brand.estado)"
+                            [severity]="getStatusSeverity(brand.estado)"></p-tag>
                     </td>
                     <td>
                         <div class="flex gap-2">
@@ -88,7 +83,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="5" class="text-center py-8 text-gray-500">
+                    <td colspan="4" class="text-center py-8 text-gray-500">
                         No se encontraron marcas que coincidan con la búsqueda.
                     </td>
                 </tr>

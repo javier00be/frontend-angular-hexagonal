@@ -13,7 +13,7 @@ import { UpdateCategoryUseCase } from '../../../../core/application/category/upd
 @Component({
     selector: 'app-category-form-modal',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, Dialog, Button, InputText, Checkbox],
+    imports: [CommonModule, ReactiveFormsModule, Dialog, Button, InputText],
     templateUrl: './category-form-modal.component.html'
 })
 export class CategoryFormModalComponent implements OnChanges {
@@ -27,19 +27,19 @@ export class CategoryFormModalComponent implements OnChanges {
 
     constructor(private fb: FormBuilder, private createCategory: CreateCategoryUseCase, private updateCategory: UpdateCategoryUseCase, private messageService: MessageService) {
         this.categoryForm = this.fb.group({
-            nombre: ['', [Validators.required, Validators.minLength(2)]],
-            descripcion: ['', [Validators.required, Validators.minLength(5)]],
-            activo: [true]
+            nombre: ['', [Validators.required, Validators.minLength(2)]]
         });
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['category'] && this.category) {
             this.isEditMode = true;
-            this.categoryForm.patchValue({ nombre: this.category.nombre, descripcion: this.category.descripcion, activo: this.category.activo });
+            this.categoryForm.patchValue({
+                nombre: this.category.nombre
+            });
         } else if (changes['category'] && !this.category) {
             this.isEditMode = false;
-            this.categoryForm.reset({ activo: true });
+            this.categoryForm.reset();
         }
     }
 
@@ -52,14 +52,16 @@ export class CategoryFormModalComponent implements OnChanges {
         try {
             let savedCategory: Category;
             if (this.isEditMode && this.category) {
-                savedCategory = await this.updateCategory.execute({ ...formValue, id: this.category.id });
+                savedCategory = await this.updateCategory.execute({
+                    ...formValue, id: this.category.id
+                });
                 this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Categoría actualizada correctamente' });
             } else {
                 savedCategory = await this.createCategory.execute(formValue);
                 this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Categoría creada correctamente' });
             }
             this.onSave.emit(savedCategory);
-            this.categoryForm.reset({ activo: true });
+            this.categoryForm.reset();
         } catch (error) {
             const errorMsg = error instanceof Error ? error.message : 'Error al guardar la categoría';
             this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMsg });
@@ -67,7 +69,7 @@ export class CategoryFormModalComponent implements OnChanges {
     }
 
     handleCancel() {
-        this.categoryForm.reset({ activo: true });
+        this.categoryForm.reset();
         this.onCancel.emit();
     }
 

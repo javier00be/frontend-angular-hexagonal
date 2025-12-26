@@ -22,7 +22,9 @@ export class BrandHttpAdapter extends BrandRepository {
     }
 
     async create(brand: Brand): Promise<Brand> {
-        return firstValueFrom(this.http.post<Brand>(this.apiUrl, brand));
+        // Solo enviar el nombre al backend, el estado se crea automáticamente
+        const payload = { nombre: brand.nombre };
+        return firstValueFrom(this.http.post<Brand>(this.apiUrl, payload));
     }
 
     async update(brand: Brand): Promise<Brand> {

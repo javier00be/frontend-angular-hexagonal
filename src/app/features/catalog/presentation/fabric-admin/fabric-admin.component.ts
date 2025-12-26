@@ -14,7 +14,7 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { Tag } from 'primeng/tag';
 import { Fabric } from '../../../../core/domain/fabric/fabric.model';
 import { GetAllFabricsUseCase } from '../../../../core/application/fabric/get-all-fabrics.usecase';
-import { DeleteFabricUseCase } from '../../../../core/application/fabric/delete-fabric.usecase';
+import { UpdateFabricUseCase } from '../../../../core/application/fabric/update-fabric.usecase';
 import { FabricStateService } from '../../../../shared/presentation/state/fabric-state.service';
 import { FabricFormModalComponent } from '../fabric-form-modal/fabric-form-modal.component';
 
@@ -30,7 +30,7 @@ export class FabricAdminComponent implements OnInit {
     showFabricModal: boolean = false;
     selectedFabric: Fabric | null = null;
 
-    constructor(private getAllFabrics: GetAllFabricsUseCase, private deleteFabric: DeleteFabricUseCase, public fabricState: FabricStateService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+    constructor(private getAllFabrics: GetAllFabricsUseCase, private updateFabric: UpdateFabricUseCase, public fabricState: FabricStateService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
     async ngOnInit() {
         await this.loadFabrics();
@@ -63,10 +63,10 @@ export class FabricAdminComponent implements OnInit {
 
     confirmDelete(fabric: Fabric) {
         this.confirmationService.confirm({
-            message: `¿Está seguro de eliminar la tela "${fabric.nombre}"?`,
-            header: 'Confirmar Eliminación',
+            message: `¿Está seguro de desactivar la tela "${fabric.nombre}"?`,
+            header: 'Confirmar Desactivación',
             icon: 'pi pi-exclamation-triangle',
-            acceptLabel: 'Sí, eliminar',
+            acceptLabel: 'Sí, desactivar',
             rejectLabel: 'Cancelar',
             accept: () => this.deleteFabricConfirmed(fabric)
         });
@@ -74,11 +74,16 @@ export class FabricAdminComponent implements OnInit {
 
     async deleteFabricConfirmed(fabric: Fabric) {
         try {
-            await this.deleteFabric.execute(fabric.id!);
-            this.fabricState.deleteFabric(fabric.id!);
-            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `Tela "${fabric.nombre}" eliminada correctamente` });
+            // Borrado lógico: cambiar estado a 2 (INACTIVO)
+            const updatedFabric = { ...fabric, estado: 2 };
+            await this.updateFabric.execute(updatedFabric);
+
+            // Actualizar el estado local
+            this.fabricState.updateFabric(fabric.id!, updatedFabric);
+
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `Tela "${fabric.nombre}" desactivada correctamente` });
         } catch (error) {
-            const errorMsg = error instanceof Error ? error.message : 'Error al eliminar la tela';
+            const errorMsg = error instanceof Error ? error.message : 'Error al desactivar la tela';
             this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMsg });
         }
     }
@@ -94,11 +99,11 @@ export class FabricAdminComponent implements OnInit {
         this.selectedFabric = null;
     }
 
-    getStatusSeverity(activo: boolean): 'success' | 'danger' {
-        return activo ? 'success' : 'danger';
+    getStatusSeverity(estado?: number): 'success' | 'danger' {
+        return estado === 1 ? 'success' : 'danger';
     }
 
-    getStatusLabel(activo: boolean): string {
-        return activo ? 'Activo' : 'Inactivo';
+    getStatusLabel(estado?: number): string {
+        return estado === 1 ? 'ACTIVO' : 'INACTIVO';
     }
 }

@@ -13,7 +13,7 @@ import { UpdateFabricUseCase } from '../../../../core/application/fabric/update-
 @Component({
     selector: 'app-fabric-form-modal',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, Dialog, Button, InputText, Checkbox],
+    imports: [CommonModule, ReactiveFormsModule, Dialog, Button, InputText],
     templateUrl: './fabric-form-modal.component.html'
 })
 export class FabricFormModalComponent implements OnChanges {
@@ -27,19 +27,17 @@ export class FabricFormModalComponent implements OnChanges {
 
     constructor(private fb: FormBuilder, private createFabric: CreateFabricUseCase, private updateFabric: UpdateFabricUseCase, private messageService: MessageService) {
         this.fabricForm = this.fb.group({
-            nombre: ['', [Validators.required, Validators.minLength(2)]],
-            descripcion: ['', [Validators.required, Validators.minLength(5)]],
-            activo: [true]
+            nombre: ['', [Validators.required, Validators.minLength(2)]]
         });
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['fabric'] && this.fabric) {
             this.isEditMode = true;
-            this.fabricForm.patchValue({ nombre: this.fabric.nombre, descripcion: this.fabric.descripcion, activo: this.fabric.activo });
+            this.fabricForm.patchValue({ nombre: this.fabric.nombre });
         } else if (changes['fabric'] && !this.fabric) {
             this.isEditMode = false;
-            this.fabricForm.reset({ activo: true });
+            this.fabricForm.reset();
         }
     }
 
@@ -59,7 +57,7 @@ export class FabricFormModalComponent implements OnChanges {
                 this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Tela creada correctamente' });
             }
             this.onSave.emit(savedFabric);
-            this.fabricForm.reset({ activo: true });
+            this.fabricForm.reset();
         } catch (error) {
             const errorMsg = error instanceof Error ? error.message : 'Error al guardar la tela';
             this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMsg });
@@ -67,7 +65,7 @@ export class FabricFormModalComponent implements OnChanges {
     }
 
     handleCancel() {
-        this.fabricForm.reset({ activo: true });
+        this.fabricForm.reset();
         this.onCancel.emit();
     }
 

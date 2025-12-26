@@ -14,7 +14,7 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { Tag } from 'primeng/tag';
 import { Category } from '../../../../core/domain/category/category.model';
 import { GetAllCategoriesUseCase } from '../../../../core/application/category/get-all-categories.usecase';
-import { DeleteCategoryUseCase } from '../../../../core/application/category/delete-category.usecase';
+import { UpdateCategoryUseCase } from '../../../../core/application/category/update-category.usecase';
 import { CategoryStateService } from '../../../../shared/presentation/state/category-state.service';
 import { CategoryFormModalComponent } from '../category-form-modal/category-form-modal.component';
 
@@ -32,7 +32,7 @@ export class CategoryAdminComponent implements OnInit {
 
     constructor(
         private getAllCategories: GetAllCategoriesUseCase,
-        private deleteCategory: DeleteCategoryUseCase,
+        private updateCategory: UpdateCategoryUseCase,
         public categoryState: CategoryStateService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
@@ -69,10 +69,10 @@ export class CategoryAdminComponent implements OnInit {
 
     confirmDelete(category: Category) {
         this.confirmationService.confirm({
-            message: `¿Está seguro de eliminar la categoría "${category.nombre}"?`,
-            header: 'Confirmar Eliminación',
+            message: `¿Está seguro de desactivar la categoría "${category.nombre}"?`,
+            header: 'Confirmar Desactivación',
             icon: 'pi pi-exclamation-triangle',
-            acceptLabel: 'Sí, eliminar',
+            acceptLabel: 'Sí, desactivar',
             rejectLabel: 'Cancelar',
             accept: () => this.deleteCategoryConfirmed(category)
         });
@@ -80,11 +80,16 @@ export class CategoryAdminComponent implements OnInit {
 
     async deleteCategoryConfirmed(category: Category) {
         try {
-            await this.deleteCategory.execute(category.id!);
-            this.categoryState.deleteCategory(category.id!);
-            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `Categoría "${category.nombre}" eliminada correctamente` });
+            // Borrado lógico: cambiar estado a 2 (INACTIVO)
+            const updatedCategory = { ...category, estado: 2 };
+            await this.updateCategory.execute(updatedCategory);
+
+            // Actualizar el estado local
+            this.categoryState.updateCategory(category.id!, updatedCategory);
+
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `Categoría "${category.nombre}" desactivada correctamente` });
         } catch (error) {
-            const errorMsg = error instanceof Error ? error.message : 'Error al eliminar la categoría';
+            const errorMsg = error instanceof Error ? error.message : 'Error al desactivar la categoría';
             this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMsg });
         }
     }
@@ -100,11 +105,11 @@ export class CategoryAdminComponent implements OnInit {
         this.selectedCategory = null;
     }
 
-    getStatusSeverity(activo: boolean): 'success' | 'danger' {
-        return activo ? 'success' : 'danger';
+    getStatusSeverity(estado?: number): 'success' | 'danger' {
+        return estado === 1 ? 'success' : 'danger';
     }
 
-    getStatusLabel(activo: boolean): string {
-        return activo ? 'Activo' : 'Inactivo';
+    getStatusLabel(estado?: number): string {
+        return estado === 1 ? 'ACTIVO' : 'INACTIVO';
     }
 }

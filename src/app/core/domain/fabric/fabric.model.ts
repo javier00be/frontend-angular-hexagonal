@@ -4,8 +4,7 @@
 export interface Fabric {
     id?: number;
     nombre: string;
-    descripcion: string;
-    activo: boolean;
+    estado?: number
 }
 
 /**

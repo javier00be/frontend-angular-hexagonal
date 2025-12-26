@@ -14,24 +14,6 @@
                     {{ getFieldError('nombre') }}
                 </small>
             </div>
-
-            <!-- Descripción -->
-            <div>
-                <label for="descripcion" class="block mb-2 font-semibold text-sm">
-                    Descripción <span class="text-red-500">*</span>
-                </label>
-                <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="4"
-                    placeholder="Describe la marca..." class="w-full"></textarea>
-                <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('descripcion')">
-                    {{ getFieldError('descripcion') }}
-                </small>
-            </div>
-
-            <!-- Activo -->
-            <div class="flex items-center gap-2">
-                <p-checkbox formControlName="activo" [binary]="true" inputId="activo"></p-checkbox>
-                <label for="activo" class="font-semibold text-sm cursor-pointer">Marca activa</label>
-            </div>
         </div>
     </form>
 

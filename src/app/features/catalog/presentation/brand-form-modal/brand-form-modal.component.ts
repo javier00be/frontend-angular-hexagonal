@@ -23,7 +23,6 @@ import { UpdateBrandUseCase } from '../../../../core/application/brand/update-br
         Dialog,
         Button,
         InputText,
-        Checkbox
     ],
     templateUrl: './brand-form-modal.component.html'
 })
@@ -44,9 +43,7 @@ export class BrandFormModalComponent implements OnChanges {
         private messageService: MessageService
     ) {
         this.brandForm = this.fb.group({
-            nombre: ['', [Validators.required, Validators.minLength(2)]],
-            descripcion: ['', [Validators.required, Validators.minLength(5)]],
-            activo: [true]
+            nombre: ['', [Validators.required, Validators.minLength(2)]]
         });
     }
 
@@ -54,13 +51,11 @@ export class BrandFormModalComponent implements OnChanges {
         if (changes['brand'] && this.brand) {
             this.isEditMode = true;
             this.brandForm.patchValue({
-                nombre: this.brand.nombre,
-                descripcion: this.brand.descripcion,
-                activo: this.brand.activo
+                nombre: this.brand.nombre
             });
         } else if (changes['brand'] && !this.brand) {
             this.isEditMode = false;
-            this.brandForm.reset({ activo: true });
+            this.brandForm.reset();
         }
     }
 
@@ -95,7 +90,7 @@ export class BrandFormModalComponent implements OnChanges {
             }
 
             this.onSave.emit(savedBrand);
-            this.brandForm.reset({ activo: true });
+            this.brandForm.reset();
         } catch (error) {
             const errorMsg = error instanceof Error ? error.message : 'Error al guardar la marca';
             this.messageService.add({
@@ -107,7 +102,7 @@ export class BrandFormModalComponent implements OnChanges {
     }
 
     handleCancel() {
-        this.brandForm.reset({ activo: true });
+        this.brandForm.reset();
         this.onCancel.emit();
     }
 
