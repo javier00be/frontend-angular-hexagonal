@@ -6,9 +6,9 @@ import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Checkbox } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
-import { Category } from '../../../../core/domain/category/category.model';
-import { CreateCategoryUseCase } from '../../../../core/application/category/create-category.usecase';
-import { UpdateCategoryUseCase } from '../../../../core/application/category/update-category.usecase';
+import { Category } from '../../../../../core/domain/category/category.model';
+import { CreateCategoryUseCase } from '../../../../../core/application/category/create-category.usecase';
+import { UpdateCategoryUseCase } from '../../../../../core/application/category/update-category.usecase';
 
 @Component({
     selector: 'app-category-form-modal',

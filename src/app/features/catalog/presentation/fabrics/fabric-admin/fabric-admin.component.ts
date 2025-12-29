@@ -12,10 +12,10 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { Tag } from 'primeng/tag';
-import { Fabric } from '../../../../core/domain/fabric/fabric.model';
-import { GetAllFabricsUseCase } from '../../../../core/application/fabric/get-all-fabrics.usecase';
-import { UpdateFabricUseCase } from '../../../../core/application/fabric/update-fabric.usecase';
-import { FabricStateService } from '../../../../shared/presentation/state/fabric-state.service';
+import { Fabric } from '../../../../../core/domain/fabric/fabric.model';
+import { GetAllFabricsUseCase } from '../../../../../core/application/fabric/get-all-fabrics.usecase';
+import { UpdateFabricUseCase } from '../../../../../core/application/fabric/update-fabric.usecase';
+import { FabricStateService } from '../../../../../shared/presentation/state/fabric-state.service';
 import { FabricFormModalComponent } from '../fabric-form-modal/fabric-form-modal.component';
 
 @Component({

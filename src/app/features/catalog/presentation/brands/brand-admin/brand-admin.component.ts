@@ -16,10 +16,10 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { Tag } from 'primeng/tag';
 
 // Hexagonal Imports
-import { Brand } from '../../../../core/domain/brand/brand.model';
-import { GetAllBrandsUseCase } from '../../../../core/application/brand/get-all-brands.usecase';
-import { UpdateBrandUseCase } from '../../../../core/application/brand/update-brand.usecase';
-import { BrandStateService } from '../../../../shared/presentation/state/brand-state.service';
+import { Brand } from '../../../../../core/domain/brand/brand.model';
+import { GetAllBrandsUseCase } from '../../../../../core/application/brand/get-all-brands.usecase';
+import { UpdateBrandUseCase } from '../../../../../core/application/brand/update-brand.usecase';
+import { BrandStateService } from '../../../../../shared/presentation/state/brand-state.service';
 import { BrandFormModalComponent } from '../brand-form-modal/brand-form-modal.component';
 
 @Component({

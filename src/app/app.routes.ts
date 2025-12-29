@@ -3,7 +3,8 @@ import { AppSimpleLayoutComponent } from './shared/presentation/layout/app-simpl
 import { AppLayoutComponent } from './shared/presentation/layout/app-layout/app-layout.component';
 import { AppDashboardLayoutComponent } from './shared/presentation/layout/app-dashboard-layout/app-dashboard-layout.component';
 import { HomeComponent } from './features/home/presentation/home.component';
-import { ProductListComponent } from './features/catalog/presentation/product-list/product-list.component';
+import { ProductListComponent } from './features/catalog/presentation/products/product-list/product-list.component';
+
 
 export const routes: Routes = [
     {
@@ -39,22 +40,22 @@ export const routes: Routes = [
             },
             {
                 path: 'productos-admin',
-                loadComponent: () => import('./features/catalog/presentation/product-admin/product-admin.component').then(m => m.ProductAdminComponent),
+                loadComponent: () => import('./features/catalog/presentation/products/product-admin/product-admin.component').then(m => m.ProductAdminComponent),
                 title: 'HexaShop - Gestión de Productos'
             },
             {
                 path: 'productos/marcas',
-                loadComponent: () => import('./features/catalog/presentation/brand-admin/brand-admin.component').then(m => m.BrandAdminComponent),
+                loadComponent: () => import('./features/catalog/presentation/brands/brand-admin/brand-admin.component').then(m => m.BrandAdminComponent),
                 title: 'HexaShop - Gestión de Marcas'
             },
             {
                 path: 'productos/categorias',
-                loadComponent: () => import('./features/catalog/presentation/category-admin/category-admin.component').then(m => m.CategoryAdminComponent),
+                loadComponent: () => import('./features/catalog/presentation/categories/category-admin/category-admin.component').then(m => m.CategoryAdminComponent),
                 title: 'HexaShop - Gestión de Categorías'
             },
             {
                 path: 'productos/telas',
-                loadComponent: () => import('./features/catalog/presentation/fabric-admin/fabric-admin.component').then(m => m.FabricAdminComponent),
+                loadComponent: () => import('./features/catalog/presentation/fabrics/fabric-admin/fabric-admin.component').then(m => m.FabricAdminComponent),
                 title: 'HexaShop - Gestión de Telas'
             }
         ]

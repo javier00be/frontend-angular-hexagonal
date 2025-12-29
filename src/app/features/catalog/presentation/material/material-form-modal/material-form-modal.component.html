@@ -1,0 +1,24 @@
+<p-dialog [header]="isEditMode ? 'Editar Material' : 'Nuevo Material'" [modal]="true" [(visible)]="visible"
+    (onHide)="onDialogHide()" [style]="{ width: '600px' }" [draggable]="false" [resizable]="false">
+
+    <form [formGroup]="materialForm">
+        <div class="flex flex-col gap-5">
+            <!-- Nombre -->
+            <div>
+                <label for="nombre" class="block mb-2 font-semibold text-sm">
+                    Nombre del Material <span class="text-red-500">*</span>
+                </label>
+                <input pInputText id="nombre" formControlName="nombre" placeholder="Ej: Algodón, Poliéster, etc."
+                    class="w-full" />
+                <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('nombre')">
+                    {{ getFieldError('nombre') }}
+                </small>
+            </div>
+        </div>
+    </form>
+
+    <ng-template #footer>
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="handleCancel()" />
+        <p-button [label]="isEditMode ? 'Actualizar' : 'Crear'" severity="success" (onClick)="handleSave()" />
+    </ng-template>
+</p-dialog>

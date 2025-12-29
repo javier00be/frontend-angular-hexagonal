@@ -10,9 +10,9 @@ import { Checkbox } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
 
 // Hexagonal
-import { Brand } from '../../../../core/domain/brand/brand.model';
-import { CreateBrandUseCase } from '../../../../core/application/brand/create-brand.usecase';
-import { UpdateBrandUseCase } from '../../../../core/application/brand/update-brand.usecase';
+import { Brand } from '../../../../../core/domain/brand/brand.model';
+import { CreateBrandUseCase } from '../../../../../core/application/brand/create-brand.usecase';
+import { UpdateBrandUseCase } from '../../../../../core/application/brand/update-brand.usecase';
 
 @Component({
     selector: 'app-brand-form-modal',

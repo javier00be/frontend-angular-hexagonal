@@ -11,7 +11,7 @@ import { InputNumber } from 'primeng/inputnumber';
 import { TooltipModule } from 'primeng/tooltip';
 
 // Domain
-import { Product } from '../../../../core/domain/product/product.model';
+import { Product } from '../../../../../core/domain/product/product.model';
 
 export interface ProductWithFile {
     product: Product;

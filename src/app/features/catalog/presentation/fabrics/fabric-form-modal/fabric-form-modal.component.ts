@@ -6,9 +6,9 @@ import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Checkbox } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
-import { Fabric } from '../../../../core/domain/fabric/fabric.model';
-import { CreateFabricUseCase } from '../../../../core/application/fabric/create-fabric.usecase';
-import { UpdateFabricUseCase } from '../../../../core/application/fabric/update-fabric.usecase';
+import { Fabric } from '../../../../../core/domain/fabric/fabric.model';
+import { CreateFabricUseCase } from '../../../../../core/application/fabric/create-fabric.usecase';
+import { UpdateFabricUseCase } from '../../../../../core/application/fabric/update-fabric.usecase';
 
 @Component({
     selector: 'app-fabric-form-modal',

@@ -16,11 +16,11 @@ import { InputIcon } from 'primeng/inputicon';
 import { SelectButton } from 'primeng/selectbutton';
 
 // Hexagonal Imports
-import { Product } from '../../../../core/domain/product/product.model';
-import { GetAllProductsUseCase } from '../../../../core/application/product/get-all-products.usecase';
-import { CreateProductUseCase } from '../../../../core/application/product/create-product.usecase';
-import { UpdateProductUseCase } from '../../../../core/application/product/update-product.usecase';
-import { ProductStateService } from '../../../../shared/presentation/state/product-state.service';
+import { Product } from '../../../../../core/domain/product/product.model';
+import { GetAllProductsUseCase } from '../../../../../core/application/product/get-all-products.usecase';
+import { CreateProductUseCase } from '../../../../../core/application/product/create-product.usecase';
+import { UpdateProductUseCase } from '../../../../../core/application/product/update-product.usecase';
+import { ProductStateService } from '../../../../../shared/presentation/state/product-state.service';
 import { ProductFormModalComponent } from '../product-form-modal/product-form-modal.component';
 
 @Component({

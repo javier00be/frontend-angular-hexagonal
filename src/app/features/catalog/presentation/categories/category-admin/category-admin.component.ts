@@ -12,10 +12,10 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { Tag } from 'primeng/tag';
-import { Category } from '../../../../core/domain/category/category.model';
-import { GetAllCategoriesUseCase } from '../../../../core/application/category/get-all-categories.usecase';
-import { UpdateCategoryUseCase } from '../../../../core/application/category/update-category.usecase';
-import { CategoryStateService } from '../../../../shared/presentation/state/category-state.service';
+import { Category } from '../../../../../core/domain/category/category.model';
+import { GetAllCategoriesUseCase } from '../../../../../core/application/category/get-all-categories.usecase';
+import { UpdateCategoryUseCase } from '../../../../../core/application/category/update-category.usecase';
+import { CategoryStateService } from '../../../../../shared/presentation/state/category-state.service';
 import { CategoryFormModalComponent } from '../category-form-modal/category-form-modal.component';
 
 @Component({
