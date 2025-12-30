@@ -1,19 +1,126 @@
-/* Estilos para el header con scroll */
+/* Header Container with Lateral Notch Effect */
+.header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0 1rem;
+}
+
 :host ::ng-deep .p-toolbar {
     transition: all 0.3s ease-in-out;
-    border-radius: 0 !important;
+    border-radius: 0 0 24px 24px !important;
+    padding: 0.75rem 2rem !important;
+    background: #172554 !important;
+    box-shadow: 0 4px 12px rgba(23, 37, 84, 0.2);
 }
 
-/* Header cuando está scrolled */
-:host ::ng-deep .header-scrolled .p-toolbar {
-    background-color: #000000 !important;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+/* Navigation Links */
+.nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 0.5rem 0;
 }
 
-/* Header cuando está en el top */
-:host ::ng-deep .header-transparent .p-toolbar {
-    background-color: transparent !important;
-    box-shadow: none !important;
+.nav-link:hover {
+    color: white;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Icon Buttons */
+.icon-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    color: white;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Cart Badge */
+.cart-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    min-width: 18px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Button */
+.profile-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+.profile-button:hover {
+    transform: scale(1.05);
+}
+
+/* Avatar Styling */
+:host ::ng-deep .profile-button .p-avatar {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+:host ::ng-deep .profile-button:hover .p-avatar {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Logo Styling */
+.header-container .pi-shopping-bag {
+    color: white;
+}
+
+.header-container span {
+    color: white;
+}
+
+/* Dark Mode */
+:host-context(.dark) :host ::ng-deep .p-toolbar {
+    background: #0f172a !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Login Popover Styles */
@@ -26,4 +133,26 @@
 
 :host ::ng-deep .login-popover .p-popover-content {
     padding: 0 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 0.5rem;
+    }
+
+    :host ::ng-deep .p-toolbar {
+        padding: 0.75rem 1rem !important;
+        border-radius: 0 0 20px 20px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header-container {
+        padding: 0 2rem;
+    }
+
+    :host ::ng-deep .p-toolbar {
+        border-radius: 0 0 28px 28px !important;
+    }
 }

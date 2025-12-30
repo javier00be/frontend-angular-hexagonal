@@ -17,6 +17,7 @@ import { SelectButton } from 'primeng/selectbutton';
 import { Product } from '../../../../../core/domain/product/product.model';
 import { GetAllProductsUseCase } from '../../../../../core/application/product/get-all-products.usecase';
 import { ProductStateService } from '../../../../../shared/presentation/state/product-state.service';
+import { FilterSidebar, FilterConfig, FilterState } from '../../../../../shared/presentation/components/filter-sidebar/filter-sidebar';
 
 @Component({
     selector: 'app-product-list',
@@ -32,18 +33,41 @@ import { ProductStateService } from '../../../../../shared/presentation/state/pr
         Message,
         IconField,
         InputIcon,
-        SelectButton
+        SelectButton,
+        FilterSidebar
     ],
-    templateUrl: './product-list.component.html'
+    templateUrl: './product-list.component.html',
+    styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnInit {
     searchValue: string = '';
     layout: 'list' | 'grid' = 'grid';
+    filteredProducts: Product[] = [];
 
     layoutOptions = [
         { label: 'Grid', value: 'grid', icon: 'pi pi-th-large' },
         { label: 'Lista', value: 'list', icon: 'pi pi-bars' }
     ];
+
+    // Configuración de filtros
+    filterConfig: FilterConfig = {
+        categories: [
+            { label: 'Todos los Productos', value: 'all', checked: false },
+            { label: 'Ropa', value: 'ropa', checked: false },
+            { label: 'Calzado', value: 'calzado', checked: false },
+            { label: 'Accesorios', value: 'accesorios', checked: false }
+        ],
+        priceRange: {
+            min: 0,
+            max: 500
+        },
+        sortOptions: [
+            { label: 'Precio: Menor a Mayor', value: 'price_asc' },
+            { label: 'Precio: Mayor a Menor', value: 'price_desc' },
+            { label: 'Nombre: A-Z', value: 'name_asc' },
+            { label: 'Nombre: Z-A', value: 'name_desc' }
+        ]
+    };
 
     constructor(
         private getAllProducts: GetAllProductsUseCase,
@@ -64,6 +88,7 @@ export class ProductListComponent implements OnInit {
         try {
             const products = await this.getAllProducts.execute();
             this.productState.setProducts(products);
+            this.filteredProducts = products; // Inicializar productos filtrados
         } catch (error) {
             const errorMsg = error instanceof Error
                 ? error.message
@@ -73,6 +98,46 @@ export class ProductListComponent implements OnInit {
         } finally {
             this.productState.setLoading(false);
         }
+    }
+
+    /**
+     * Maneja los cambios de filtros
+     */
+    onFilterChange(filterState: FilterState) {
+        let filtered = [...this.productState.products()];
+
+        // Filtrar por categorías
+        if (filterState.selectedCategories.length > 0 && !filterState.selectedCategories.includes('all')) {
+            filtered = filtered.filter(p =>
+                filterState.selectedCategories.some(cat =>
+                    p.nombre.toLowerCase().includes(cat.toLowerCase())
+                )
+            );
+        }
+
+        // Filtrar por rango de precio
+        filtered = filtered.filter(p =>
+            p.precio >= filterState.priceRange[0] &&
+            p.precio <= filterState.priceRange[1]
+        );
+
+        // Ordenar
+        switch (filterState.sortBy) {
+            case 'price_asc':
+                filtered.sort((a, b) => a.precio - b.precio);
+                break;
+            case 'price_desc':
+                filtered.sort((a, b) => b.precio - a.precio);
+                break;
+            case 'name_asc':
+                filtered.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                break;
+            case 'name_desc':
+                filtered.sort((a, b) => b.nombre.localeCompare(a.nombre));
+                break;
+        }
+
+        this.filteredProducts = filtered;
     }
 
     /**

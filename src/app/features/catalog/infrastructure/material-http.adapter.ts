@@ -10,7 +10,7 @@ import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class MaterialHttpAdapter extends MaterialRepository {
-    private apiUrl = `${environment.apiUrl}/material`;
+    private apiUrl = `${environment.apiUrl}/materiales`;
     
     constructor(private http: HttpClient) {
         super();

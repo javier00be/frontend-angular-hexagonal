@@ -3,6 +3,7 @@
  */
 export interface Fabric {
     id?: number;
+    codigo: string;
     nombre: string;
     estado?: number
 }

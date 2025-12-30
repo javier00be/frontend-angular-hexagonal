@@ -1,0 +1,68 @@
+<div class="filter-sidebar">
+    <!-- Header -->
+    <div class="filter-header">
+        <h3 class="filter-title">{{ title }}</h3>
+        <p-button label="Limpiar" [text]="true" size="small" severity="secondary" (onClick)="clearFilters()"
+            styleClass="!text-sm">
+        </p-button>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Categories Section -->
+    <div class="filter-section" *ngIf="config.categories && config.categories.length > 0">
+        <h4 class="section-title">
+            <i class="pi pi-tag mr-2"></i>
+            Categorías
+        </h4>
+        <div class="filter-options">
+            <div class="filter-option" *ngFor="let category of config.categories">
+                <div class="flex items-center justify-between w-full">
+                    <div class="flex items-center gap-2">
+                        <p-checkbox [value]="category.value" [binary]="true" [(ngModel)]="category.checked"
+                            (onChange)="onCategoryChange(category.value, $event.checked)">
+                        </p-checkbox>
+                        <label class="cursor-pointer">{{ category.label }}</label>
+                    </div>
+                    <span class="option-count" *ngIf="category.count">{{ category.count }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-divider *ngIf="config.categories && config.categories.length > 0"></p-divider>
+
+    <!-- Price Range Section -->
+    <div class="filter-section" *ngIf="config.priceRange">
+        <h4 class="section-title">
+            <i class="pi pi-dollar mr-2"></i>
+            Rango de Precio
+        </h4>
+        <div class="price-range-container">
+            <div class="price-labels">
+                <span class="price-label">S/ {{ priceRange[0] }}</span>
+                <span class="price-label">S/ {{ priceRange[1] }}</span>
+            </div>
+            <p-slider [(ngModel)]="priceRange" [range]="true" [min]="config.priceRange.min"
+                [max]="config.priceRange.max" (onSlideEnd)="onPriceRangeChange()" styleClass="w-full mt-4">
+            </p-slider>
+        </div>
+    </div>
+
+    <p-divider *ngIf="config.priceRange"></p-divider>
+
+    <!-- Sort Options Section -->
+    <div class="filter-section" *ngIf="config.sortOptions && config.sortOptions.length > 0">
+        <h4 class="section-title">
+            <i class="pi pi-sort-alt mr-2"></i>
+            Ordenar Por
+        </h4>
+        <div class="filter-options">
+            <div class="filter-option sort-option" *ngFor="let option of config.sortOptions"
+                [class.active]="sortBy === option.value" (click)="onSortChange(option.value)">
+                <i class="pi pi-circle-fill" [class.selected]="sortBy === option.value"></i>
+                <span>{{ option.label }}</span>
+            </div>
+        </div>
+    </div>
+</div>

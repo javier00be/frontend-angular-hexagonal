@@ -11,6 +11,8 @@ import { DashboardRepository } from './core/domain/dashboard/dashboard.model';
 import { BrandRepository } from './core/domain/brand/brand.model';
 import { CategoryRepository } from './core/domain/category/category.model';
 import { FabricRepository } from './core/domain/fabric/fabric.model';
+import { MaterialRepository } from './core/domain/material/material.model';
+import { UserRepository } from './core/domain/user/user.model';
 
 // Casos de Uso - Products
 import { GetAllProductsUseCase } from './core/application/product/get-all-products.usecase';
@@ -31,6 +33,16 @@ import { GetAllFabricsUseCase } from './core/application/fabric/get-all-fabrics.
 import { CreateFabricUseCase } from './core/application/fabric/create-fabric.usecase';
 import { UpdateFabricUseCase } from './core/application/fabric/update-fabric.usecase';
 import { DeleteFabricUseCase } from './core/application/fabric/delete-fabric.usecase';
+// Casos de Uso - Materials
+import { GetAllMaterialsUseCase } from './core/application/material/get-all-material.usecase';
+import { CreateMaterialUseCase } from './core/application/material/create-material.usecase';
+import { UpdateMaterialUseCase } from './core/application/material/update-material.usecase';
+import { DeleteMaterialUseCase } from './core/application/material/delete-material.usecase';
+// Casos de Uso - Users
+import { GetAllUsersUseCase } from './core/application/user/get-all-users.usecase';
+import { CreateUserUseCase } from './core/application/user/create-user.usecase';
+import { UpdateUserUseCase } from './core/application/user/update-user.usecase';
+import { DeleteUserUseCase } from './core/application/user/delete-user.usecase';
 // Casos de Uso - Others
 import { AddToCartUseCase } from './core/application/cart/add-to-cart.usecase';
 import { GetDashboardStatsUseCase } from './core/application/dashboard/get-dashboard-stats.usecase';
@@ -41,10 +53,13 @@ import { ProductHttpAdapter } from './features/catalog/infrastructure/product-ht
 import { BrandHttpAdapter } from './features/catalog/infrastructure/brand-http.adapter';
 import { CategoryHttpAdapter } from './features/catalog/infrastructure/category-http.adapter';
 import { FabricHttpAdapter } from './features/catalog/infrastructure/fabric-http.adapter';
+import { MaterialHttpAdapter } from './features/catalog/infrastructure/material-http.adapter';
+
 import { CartInMemoryAdapter } from './features/cart/infrastructure/cart-in-memory.adapter';
 import { DashboardMockAdapter } from './features/dashboard/infrastructure/dashboard-mock.adapter';
 
 import { routes } from './app.routes'; // Necesitas crear este archivo
+import { UserHttpAdapter } from './features/catalog/infrastructure/user-http.adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -70,6 +85,8 @@ export const appConfig: ApplicationConfig = {
     { provide: BrandRepository, useClass: BrandHttpAdapter },
     { provide: CategoryRepository, useClass: CategoryHttpAdapter },
     { provide: FabricRepository, useClass: FabricHttpAdapter },
+    { provide: MaterialRepository, useClass: MaterialHttpAdapter },
+    { provide: UserRepository, useClass: UserHttpAdapter },
     { provide: CartRepository, useClass: CartInMemoryAdapter },
     { provide: DashboardRepository, useClass: DashboardMockAdapter },
 
@@ -122,6 +139,18 @@ export const appConfig: ApplicationConfig = {
     { provide: CreateFabricUseCase, useFactory: (repo: FabricRepository) => new CreateFabricUseCase(repo), deps: [FabricRepository] },
     { provide: UpdateFabricUseCase, useFactory: (repo: FabricRepository) => new UpdateFabricUseCase(repo), deps: [FabricRepository] },
     { provide: DeleteFabricUseCase, useFactory: (repo: FabricRepository) => new DeleteFabricUseCase(repo), deps: [FabricRepository] },
+
+    // Casos de Uso - Materials
+    { provide: GetAllMaterialsUseCase, useFactory: (repo: MaterialRepository) => new GetAllMaterialsUseCase(repo), deps: [MaterialRepository] },
+    { provide: CreateMaterialUseCase, useFactory: (repo: MaterialRepository) => new CreateMaterialUseCase(repo), deps: [MaterialRepository] },
+    { provide: UpdateMaterialUseCase, useFactory: (repo: MaterialRepository) => new UpdateMaterialUseCase(repo), deps: [MaterialRepository] },
+    { provide: DeleteMaterialUseCase, useFactory: (repo: MaterialRepository) => new DeleteMaterialUseCase(repo), deps: [MaterialRepository] },
+
+    // Casos de Uso - Users
+    { provide: GetAllUsersUseCase, useFactory: (repo: UserRepository) => new GetAllUsersUseCase(repo), deps: [UserRepository] },
+    { provide: CreateUserUseCase, useFactory: (repo: UserRepository) => new CreateUserUseCase(repo), deps: [UserRepository] },
+    { provide: UpdateUserUseCase, useFactory: (repo: UserRepository) => new UpdateUserUseCase(repo), deps: [UserRepository] },
+    { provide: DeleteUserUseCase, useFactory: (repo: UserRepository) => new DeleteUserUseCase(repo), deps: [UserRepository] },
 
     // El resto de los servicios de Angular (MessageService) se proveen localmente o en el root.
   ],

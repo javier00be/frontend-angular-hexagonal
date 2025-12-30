@@ -15,13 +15,7 @@ export const routes: Routes = [
                 path: '',
                 component: HomeComponent,
                 title: 'HexaShop - Inicio'
-            }
-        ]
-    },
-    {
-        path: '',
-        component: AppLayoutComponent,
-        children: [
+            },
             {
                 path: 'productos',
                 component: ProductListComponent,
@@ -57,6 +51,16 @@ export const routes: Routes = [
                 path: 'productos/telas',
                 loadComponent: () => import('./features/catalog/presentation/fabrics/fabric-admin/fabric-admin.component').then(m => m.FabricAdminComponent),
                 title: 'HexaShop - Gestión de Telas'
+            },
+            {
+                path: 'productos/materiales',
+                loadComponent: () => import('./features/catalog/presentation/material/material-admin/material-admin.component').then(m => m.MaterialAdminComponent),
+                title: 'HexaShop - Gestión de Materiales'
+            },
+            {
+                path: 'usuarios',
+                loadComponent: () => import('./features/catalog/presentation/user/user-admin/user-admin.component').then(m => m.UserAdminComponent),
+                title: 'HexaShop - Gestión de Usuarios'
             }
         ]
     },

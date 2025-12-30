@@ -1,23 +1,43 @@
-<div [ngClass]="isScrolled ? 'header-scrolled' : 'header-transparent'" class="fixed top-0 left-0 right-0 z-50">
+<div class="header-container">
     <p-toolbar styleClass="!border-none">
         <ng-template pTemplate="start">
-            <span class="font-semibold text-xl text-white drop-shadow-lg">Bensam</span>
+            <!-- Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" routerLink="/">
+                <i class="pi pi-shopping-bag text-2xl text-white"></i>
+                <span class="font-bold text-xl text-white">Bensam</span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="center">
+            <!-- Navigation Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a routerLink="/" class="nav-link">Inicio</a>
+                <a routerLink="/productos" class="nav-link">Shop</a>
+                <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+            </div>
         </ng-template>
 
         <ng-template pTemplate="end">
-            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10"
-                routerLink="/dashboard">Dashboard</p-button>
-            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Buscar</p-button>
-            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10">Nosotros</p-button>
+            <!-- Action Icons -->
+            <div class="flex items-center gap-4">
+                <!-- Search Icon -->
+                <button class="icon-button" pTooltip="Buscar">
+                    <i class="pi pi-search"></i>
+                </button>
 
-            <!-- Login Button with Popover -->
-            <p-button [text]="true" styleClass="!text-white hover:!bg-white/10" (onClick)="loginPopover.toggle($event)">
-                Login
-            </p-button>
+                <!-- Cart Icon with Badge -->
+                <button class="icon-button relative" routerLink="/carrito" pTooltip="Carrito">
+                    <i class="pi pi-shopping-cart"></i>
+                    <span class="cart-badge">2</span>
+                </button>
 
-            <!-- <p-button icon="pi pi-bell" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
-            <p-button icon="pi pi-cog" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button> -->
-            <p-button icon="pi pi-shopping-cart" [text]="true" styleClass="!text-white hover:!bg-white/10"></p-button>
+                <!-- User Profile -->
+                <button class="profile-button" (onClick)="loginPopover.toggle($event)">
+                    <p-avatar icon="pi pi-user" shape="circle" size="normal"
+                        styleClass="!bg-gray-200 !text-gray-700 dark:!bg-gray-700 dark:!text-gray-200">
+                    </p-avatar>
+                </button>
+            </div>
         </ng-template>
     </p-toolbar>
 </div>

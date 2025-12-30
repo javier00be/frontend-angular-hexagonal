@@ -87,6 +87,20 @@ export class AppSidebarComponent {
                 separator: true
             },
             {
+                label: 'Usuarios',
+                icon: 'pi pi-users',
+                items: [
+                    {
+                        label: 'Gestión de Usuarios',
+                        icon: 'pi pi-users',
+                        routerLink: '/usuarios'
+                    }
+                ]
+            },
+            {
+                separator: true
+            },
+            {
                 label: 'Órdenes',
                 icon: 'pi pi-shopping-cart',
                 items: [

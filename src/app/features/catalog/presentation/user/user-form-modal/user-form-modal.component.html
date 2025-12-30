@@ -1,0 +1,97 @@
+<p-dialog [header]="isEditMode ? 'Editar Usuario' : 'Nuevo Usuario'" [modal]="true" [(visible)]="visible"
+    (onHide)="onDialogHide()" [style]="{ width: '700px' }" [draggable]="false" [resizable]="false">
+
+    <form [formGroup]="userForm">
+        <div class="flex flex-col gap-4">
+            <!-- Nombre -->
+            <div>
+                <label for="nombre" class="block mb-2 font-semibold text-sm">
+                    Nombre <span class="text-red-500">*</span>
+                </label>
+                <input pInputText id="nombre" formControlName="nombre" placeholder="Ingrese el nombre" class="w-full" />
+                <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('nombre')">
+                    {{ getFieldError('nombre') }}
+                </small>
+            </div>
+
+            <!-- Apellidos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="apellido_paterno" class="block mb-2 font-semibold text-sm">
+                        Apellido Paterno <span class="text-red-500">*</span>
+                    </label>
+                    <input pInputText id="apellido_paterno" formControlName="apellido_paterno"
+                        placeholder="Apellido paterno" class="w-full" />
+                    <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('apellido_paterno')">
+                        {{ getFieldError('apellido_paterno') }}
+                    </small>
+                </div>
+                <div>
+                    <label for="apellido_materno" class="block mb-2 font-semibold text-sm">
+                        Apellido Materno <span class="text-red-500">*</span>
+                    </label>
+                    <input pInputText id="apellido_materno" formControlName="apellido_materno"
+                        placeholder="Apellido materno" class="w-full" />
+                    <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('apellido_materno')">
+                        {{ getFieldError('apellido_materno') }}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Email y Teléfono -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="email" class="block mb-2 font-semibold text-sm">
+                        Email <span class="text-red-500">*</span>
+                    </label>
+                    <input pInputText id="email" formControlName="email" type="email" placeholder="usuario@ejemplo.com"
+                        class="w-full" />
+                    <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('email')">
+                        {{ getFieldError('email') }}
+                    </small>
+                </div>
+                <div>
+                    <label for="telefono" class="block mb-2 font-semibold text-sm">
+                        Teléfono <span class="text-red-500">*</span>
+                    </label>
+                    <input pInputText id="telefono" formControlName="telefono" placeholder="999999999" class="w-full" />
+                    <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('telefono')">
+                        {{ getFieldError('telefono') }}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Contraseña y Rol -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="password" class="block mb-2 font-semibold text-sm">
+                        Contraseña <span class="text-red-500" *ngIf="!isEditMode">*</span>
+                        <span class="text-gray-500 text-xs" *ngIf="isEditMode">(dejar vacío para no cambiar)</span>
+                    </label>
+                    <p-password id="password" formControlName="password" placeholder="Contraseña" [toggleMask]="true"
+                        [feedback]="false" styleClass="w-full" inputStyleClass="w-full">
+                    </p-password>
+                    <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('password')">
+                        {{ getFieldError('password') }}
+                    </small>
+                </div>
+                <div>
+                    <label for="rol" class="block mb-2 font-semibold text-sm">
+                        Rol <span class="text-red-500">*</span>
+                    </label>
+                    <p-select id="rol" formControlName="rol" [options]="rolOptions" optionLabel="label"
+                        optionValue="value" placeholder="Seleccione un rol" styleClass="w-full">
+                    </p-select>
+                    <small class="text-red-500 text-xs block mt-1" *ngIf="isFieldInvalid('rol')">
+                        {{ getFieldError('rol') }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <ng-template #footer>
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="handleCancel()" />
+        <p-button [label]="isEditMode ? 'Actualizar' : 'Crear'" severity="success" (onClick)="handleSave()" />
+    </ng-template>
+</p-dialog>

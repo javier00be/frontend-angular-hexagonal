@@ -27,6 +27,7 @@ export class FabricFormModalComponent implements OnChanges {
 
     constructor(private fb: FormBuilder, private createFabric: CreateFabricUseCase, private updateFabric: UpdateFabricUseCase, private messageService: MessageService) {
         this.fabricForm = this.fb.group({
+            codigo: ['', [Validators.required, Validators.minLength(2)]],
             nombre: ['', [Validators.required, Validators.minLength(2)]]
         });
     }
@@ -34,7 +35,10 @@ export class FabricFormModalComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['fabric'] && this.fabric) {
             this.isEditMode = true;
-            this.fabricForm.patchValue({ nombre: this.fabric.nombre });
+            this.fabricForm.patchValue({
+                codigo: this.fabric.codigo,
+                nombre: this.fabric.nombre
+            });
         } else if (changes['fabric'] && !this.fabric) {
             this.isEditMode = false;
             this.fabricForm.reset();

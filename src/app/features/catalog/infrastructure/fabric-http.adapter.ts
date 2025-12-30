@@ -22,8 +22,8 @@ export class FabricHttpAdapter extends FabricRepository {
     }
 
     async create(fabric: Fabric): Promise<Fabric> {
-        // Solo enviar el nombre al backend, el estado se crea automáticamente
-        const payload = { nombre: fabric.nombre };
+        // Enviar codigo y nombre al backend, el estado se crea automáticamente
+        const payload = { codigo: fabric.codigo, nombre: fabric.nombre };
         return firstValueFrom(this.http.post<Fabric>(this.apiUrl, payload));
     }
 

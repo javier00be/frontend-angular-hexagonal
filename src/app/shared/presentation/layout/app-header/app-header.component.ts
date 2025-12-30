@@ -22,6 +22,7 @@ import { CartStateService } from '../../state/cart-state.service';
   imports: [
     CommonModule,
     FormsModule,
+    RouterLink,
     ToolbarModule,
     ButtonModule,
     BadgeModule,
