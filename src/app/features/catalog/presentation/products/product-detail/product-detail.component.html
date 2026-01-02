@@ -1,0 +1,164 @@
+<!-- Loading State -->
+<div *ngIf="isLoading" class="flex flex-col items-center justify-center min-h-screen">
+    <p-progressSpinner></p-progressSpinner>
+    <p class="text-gray-600 mt-4">Cargando producto...</p>
+</div>
+
+<!-- Error State -->
+<div *ngIf="error && !isLoading" class="flex flex-col items-center justify-center min-h-screen px-4">
+    <p-message severity="error" [text]="error" styleClass="mb-4"></p-message>
+    <button pButton label="Volver a Productos" icon="pi pi-arrow-left" (click)="goBack()"
+        class="p-button-outlined"></button>
+</div>
+
+<!-- Product Detail -->
+<div *ngIf="product && !isLoading && !error" class="bg-white min-h-screen pt-20">
+    <!-- Breadcrumb -->
+    <div class="bg-white">
+        <div class="max-w-[1800px] mx-auto px-4 md:px-8 py-3">
+            <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="border-0 p-0"></p-breadcrumb>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-[1800px] mx-auto px-4 md:px-8">
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-4 md:p-10">
+                <!-- Image Gallery -->
+                <div class="space-y-4">
+                    <div class="relative bg-gray-100 rounded-xl overflow-hidden aspect-square">
+                        <img [src]="product.imagen" [alt]="product.nombre"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                        <div class="absolute top-4 right-4">
+                            <p-tag [value]="getStockLabel(product.cantidad)"
+                                [severity]="getStockSeverity(product.cantidad)"></p-tag>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="flex flex-col gap-6">
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{{ product.nombre }}</h1>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center gap-1">
+                                <i class="pi pi-star-fill text-orange-400"></i>
+                                <i class="pi pi-star-fill text-orange-400"></i>
+                                <i class="pi pi-star-fill text-orange-400"></i>
+                                <i class="pi pi-star-fill text-orange-400"></i>
+                                <i class="pi pi-star-fill text-orange-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-600">(1.2k Reseñas)</span>
+                        </div>
+                        <div class="text-4xl font-bold text-blue-950 mb-6">
+                            {{ formatCurrency(product.precio) }}
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <p class="text-gray-700 leading-relaxed">{{ product.descripcion }}</p>
+                    </div>
+
+                    <!-- Stock Info -->
+                    <div class="flex items-center gap-2 text-sm">
+                        <i class="pi pi-check-circle text-green-600"></i>
+                        <span class="text-gray-700">
+                            <strong>{{ product.cantidad }}</strong> unidades disponibles
+                        </span>
+                    </div>
+
+                    <!-- Quantity Selector -->
+                    <div class="border-t border-gray-200 pt-6">
+                        <label class="block text-sm font-semibold text-gray-900 mb-3">Cantidad</label>
+                        <div class="flex items-center gap-3">
+                            <button (click)="decrementQuantity()" [disabled]="quantity <= 1"
+                                class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                <i class="pi pi-minus text-sm"></i>
+                            </button>
+                            <input type="number" [(ngModel)]="quantity" [min]="1" [max]="product.cantidad"
+                                class="w-20 h-10 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-950" />
+                            <button (click)="incrementQuantity()" [disabled]="quantity >= product.cantidad"
+                                class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                <i class="pi pi-plus text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button (click)="addToCart()" [disabled]="product.cantidad === 0"
+                            class="flex-1 border-2 border-blue-950 text-blue-950 py-3 px-6 rounded-lg hover:bg-blue-50 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="pi pi-shopping-cart mr-2"></i>
+                            Agregar al Carrito
+                        </button>
+                        <button (click)="buyNow()" [disabled]="product.cantidad === 0"
+                            class="flex-1 bg-blue-950 text-white py-3 px-6 rounded-lg hover:bg-blue-900 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="pi pi-bolt mr-2"></i>
+                            Comprar Ahora
+                        </button>
+                    </div>
+
+                    <!-- Shipping Info -->
+                    <div class="border-t border-gray-200 pt-6 space-y-3">
+                        <div class="flex items-start gap-3">
+                            <i class="pi pi-truck text-blue-950 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-gray-900">Envío Gratis</p>
+                                <p class="text-sm text-gray-600">En pedidos mayores a $50</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="pi pi-refresh text-blue-950 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-gray-900">Devoluciones Gratis</p>
+                                <p class="text-sm text-gray-600">30 días para devoluciones</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="pi pi-shield text-blue-950 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-gray-900">Garantía</p>
+                                <p class="text-sm text-gray-600">1 año de garantía del fabricante</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Section -->
+            <div class="border-t border-gray-200 p-6 md:p-10">
+                <div class="border-b border-gray-200">
+                    <nav class="flex gap-8">
+                        <button class="pb-4 border-b-2 border-blue-950 text-blue-950 font-semibold">
+                            Descripción
+                        </button>
+                        <button class="pb-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900">
+                            Especificaciones
+                        </button>
+                        <button class="pb-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900">
+                            Reseñas
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content - Descripción -->
+                <div class="py-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Descripción del Producto</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">{{ product.descripcion }}</p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Este producto ha sido cuidadosamente seleccionado para ofrecerte la mejor calidad y
+                        durabilidad. Fabricado con materiales premium y diseñado pensando en tu comodidad y
+                        estilo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <app-recommended-products [products]="relatedProducts" [title]="'Productos Relacionados'"
+        [subtitle]="'Otros productos que podrían interesarte'"></app-recommended-products>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

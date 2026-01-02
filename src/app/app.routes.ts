@@ -4,6 +4,7 @@ import { AppLayoutComponent } from './shared/presentation/layout/app-layout/app-
 import { AppDashboardLayoutComponent } from './shared/presentation/layout/app-dashboard-layout/app-dashboard-layout.component';
 import { HomeComponent } from './features/home/presentation/home.component';
 import { ProductListComponent } from './features/catalog/presentation/products/product-list/product-list.component';
+import { ProductDetailComponent } from './features/catalog/presentation/products/product-detail/product-detail.component';
 
 
 export const routes: Routes = [
@@ -20,6 +21,11 @@ export const routes: Routes = [
                 path: 'productos',
                 component: ProductListComponent,
                 title: 'HexaShop - Productos'
+            },
+            {
+                path: 'productos/:sku',
+                component: ProductDetailComponent,
+                title: 'HexaShop - Detalle de Producto'
             }
         ]
     },

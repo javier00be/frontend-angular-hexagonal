@@ -12,6 +12,7 @@ export interface Product {
 export abstract class ProductRepository {
     abstract getAll(): Promise<Product[]>;
     abstract getById(id: string): Promise<Product | null>;
+    abstract getBySku(sku: string): Promise<Product | null>;
     abstract insert(product: Product, file?: File): Promise<Product>;
     abstract update(product: Product, file?: File): Promise<Product>;
     abstract delete(id: string): Promise<void>;

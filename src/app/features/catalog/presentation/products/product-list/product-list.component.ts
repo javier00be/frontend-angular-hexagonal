@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 // PrimeNG Imports
 import { DataViewModule } from 'primeng/dataview';
@@ -18,6 +19,8 @@ import { Product } from '../../../../../core/domain/product/product.model';
 import { GetAllProductsUseCase } from '../../../../../core/application/product/get-all-products.usecase';
 import { ProductStateService } from '../../../../../shared/presentation/state/product-state.service';
 import { FilterSidebar, FilterConfig, FilterState } from '../../../../../shared/presentation/components/filter-sidebar/filter-sidebar';
+import { RecommendedProductsComponent } from '../../../../../shared/presentation/components/recommended-products/recommended-products.component';
+import { AppFooterComponent } from '../../../../../shared/presentation/layout/app-footer/app-footer.component';
 
 @Component({
     selector: 'app-product-list',
@@ -25,6 +28,7 @@ import { FilterSidebar, FilterConfig, FilterState } from '../../../../../shared/
     imports: [
         CommonModule,
         FormsModule,
+        RouterModule,
         DataViewModule,
         Button,
         InputText,
@@ -34,7 +38,9 @@ import { FilterSidebar, FilterConfig, FilterState } from '../../../../../shared/
         IconField,
         InputIcon,
         SelectButton,
-        FilterSidebar
+        FilterSidebar,
+        RecommendedProductsComponent,
+        AppFooterComponent
     ],
     templateUrl: './product-list.component.html',
     styleUrl: './product-list.component.css'
@@ -43,6 +49,7 @@ export class ProductListComponent implements OnInit {
     searchValue: string = '';
     layout: 'list' | 'grid' = 'grid';
     filteredProducts: Product[] = [];
+    recommendedProducts: Product[] = [];
 
     layoutOptions = [
         { label: 'Grid', value: 'grid', icon: 'pi pi-th-large' },
@@ -89,6 +96,10 @@ export class ProductListComponent implements OnInit {
             const products = await this.getAllProducts.execute();
             this.productState.setProducts(products);
             this.filteredProducts = products; // Inicializar productos filtrados
+
+            // Seleccionar 6 productos aleatorios para recomendados
+            const shuffled = [...products].sort(() => 0.5 - Math.random());
+            this.recommendedProducts = shuffled.slice(0, 6);
         } catch (error) {
             const errorMsg = error instanceof Error
                 ? error.message

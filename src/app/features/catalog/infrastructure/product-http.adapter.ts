@@ -104,14 +104,23 @@ export class ProductHttpAdapter extends ProductRepository {
     }
 
     /**
-     * Obtiene un producto por ID desde la API REST
-     * @param id - ID del producto a buscar
+     * Obtiene un producto por ID (usa SKU internamente)
+     * @param id - ID/SKU del producto a buscar
      * @returns Product si existe, null si no se encuentra
      */
     async getById(id: string): Promise<Product | null> {
+        return this.getBySku(id);
+    }
+
+    /**
+     * Obtiene un producto por SKU desde la API REST
+     * @param sku - SKU del producto a buscar
+     * @returns Product si existe, null si no se encuentra
+     */
+    async getBySku(sku: string): Promise<Product | null> {
         try {
             const producto = await firstValueFrom(
-                this.http.get<Product>(`${this.API_URL}/${id}`)
+                this.http.get<Product>(`${this.API_URL}/sku/${sku}`)
             );
             return producto;
         } catch (error) {
