@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class ProductHttpAdapter extends ProductRepository {
-    private readonly API_URL = `${environment.apiUrl}/productos`;
+    private readonly API_URL = `${environment.apiUrl}/producto`;
 
     constructor(private http: HttpClient) {
         super();

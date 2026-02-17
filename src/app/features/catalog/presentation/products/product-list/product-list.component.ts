@@ -5,13 +5,9 @@ import { RouterModule } from '@angular/router';
 
 // PrimeNG Imports
 import { DataViewModule } from 'primeng/dataview';
-import { Button } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
 import { Tag } from 'primeng/tag';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { Message } from 'primeng/message';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
 import { SelectButton } from 'primeng/selectbutton';
 
 // Hexagonal Imports
@@ -30,13 +26,9 @@ import { AppFooterComponent } from '../../../../../shared/presentation/layout/ap
         FormsModule,
         RouterModule,
         DataViewModule,
-        Button,
-        InputText,
         Tag,
         ProgressSpinner,
         Message,
-        IconField,
-        InputIcon,
         SelectButton,
         FilterSidebar,
         RecommendedProductsComponent,
